@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.AccountsDayMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.AccountsDay">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="total_name" jdbcType="VARCHAR" property="totalName" />
+    <result column="sub_name" jdbcType="VARCHAR" property="subName" />
+    <result column="goods_number" jdbcType="VARCHAR" property="goodsNumber" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="sale_payment" jdbcType="DOUBLE" property="salePayment" />
+    <result column="refund_payment" jdbcType="DOUBLE" property="refundPayment" />
+    <result column="final_payment" jdbcType="DOUBLE" property="finalPayment" />
+    <result column="sale_num" jdbcType="INTEGER" property="saleNum" />
+    <result column="refund_num" jdbcType="INTEGER" property="refundNum" />
+    <result column="final_num" jdbcType="INTEGER" property="finalNum" />
+    <result column="order_time" jdbcType="DATE" property="orderTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, total_name, sub_name, goods_number, goods_name, sale_payment, refund_payment, 
+    final_payment, sale_num, refund_num, final_num, order_time
+  </sql>
+  <select id="queryPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from  accounts_day WHERE order_time=#{date}
+  </select>
+  <select id="selectPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from  accounts_day
+    <where>
+      <if test="orderTime!=null &amp;&amp; orderTime!='' ">and order_time = #{orderTime}</if>
+    </where>
+  </select>
+  <insert id="insertAccList">
+    insert into accounts_day(goods_name,sale_num,sale_payment,order_time,refund_payment,refund_num,final_payment,final_num) VALUES
+    <foreach collection="list" item="acc" separator=",">
+      (#{acc.goodsName},#{acc.saleNum},#{acc.salePayment},#{acc.orderTime},#{acc.refundPayment},#{acc.refundNum},#{acc.finalPayment},#{acc.finalNum})
+    </foreach>
+  </insert>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from accounts_day
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from accounts_day
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hx.dc.entity.AccountsDay">
+    insert into accounts_day (id, total_name, sub_name, 
+      goods_number, goods_name, sale_payment, 
+      refund_payment, final_payment, sale_num, 
+      refund_num, final_num, order_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{totalName,jdbcType=VARCHAR}, #{subName,jdbcType=VARCHAR}, 
+      #{goodsNumber,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{salePayment,jdbcType=DOUBLE}, 
+      #{refundPayment,jdbcType=DOUBLE}, #{finalPayment,jdbcType=DOUBLE}, #{saleNum,jdbcType=INTEGER}, 
+      #{refundNum,jdbcType=INTEGER}, #{finalNum,jdbcType=INTEGER}, #{orderTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.AccountsDay">
+    insert into accounts_day
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="totalName != null">
+        total_name,
+      </if>
+      <if test="subName != null">
+        sub_name,
+      </if>
+      <if test="goodsNumber != null">
+        goods_number,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="salePayment != null">
+        sale_payment,
+      </if>
+      <if test="refundPayment != null">
+        refund_payment,
+      </if>
+      <if test="finalPayment != null">
+        final_payment,
+      </if>
+      <if test="saleNum != null">
+        sale_num,
+      </if>
+      <if test="refundNum != null">
+        refund_num,
+      </if>
+      <if test="finalNum != null">
+        final_num,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="totalName != null">
+        #{totalName,jdbcType=VARCHAR},
+      </if>
+      <if test="subName != null">
+        #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNumber != null">
+        #{goodsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="salePayment != null">
+        #{salePayment,jdbcType=DOUBLE},
+      </if>
+      <if test="refundPayment != null">
+        #{refundPayment,jdbcType=DOUBLE},
+      </if>
+      <if test="finalPayment != null">
+        #{finalPayment,jdbcType=DOUBLE},
+      </if>
+      <if test="saleNum != null">
+        #{saleNum,jdbcType=INTEGER},
+      </if>
+      <if test="refundNum != null">
+        #{refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="finalNum != null">
+        #{finalNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.AccountsDay">
+    update accounts_day
+    <set>
+      <if test="totalName != null">
+        total_name = #{totalName,jdbcType=VARCHAR},
+      </if>
+      <if test="subName != null">
+        sub_name = #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNumber != null">
+        goods_number = #{goodsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="salePayment != null">
+        sale_payment = #{salePayment,jdbcType=DOUBLE},
+      </if>
+      <if test="refundPayment != null">
+        refund_payment = #{refundPayment,jdbcType=DOUBLE},
+      </if>
+      <if test="finalPayment != null">
+        final_payment = #{finalPayment,jdbcType=DOUBLE},
+      </if>
+      <if test="saleNum != null">
+        sale_num = #{saleNum,jdbcType=INTEGER},
+      </if>
+      <if test="refundNum != null">
+        refund_num = #{refundNum,jdbcType=INTEGER},
+      </if>
+      <if test="finalNum != null">
+        final_num = #{finalNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderTime != null">
+        order_time = #{orderTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.AccountsDay">
+    update accounts_day
+    set total_name = #{totalName,jdbcType=VARCHAR},
+      sub_name = #{subName,jdbcType=VARCHAR},
+      goods_number = #{goodsNumber,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      sale_payment = #{salePayment,jdbcType=DOUBLE},
+      refund_payment = #{refundPayment,jdbcType=DOUBLE},
+      final_payment = #{finalPayment,jdbcType=DOUBLE},
+      sale_num = #{saleNum,jdbcType=INTEGER},
+      refund_num = #{refundNum,jdbcType=INTEGER},
+      final_num = #{finalNum,jdbcType=INTEGER},
+      order_time = #{orderTime,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

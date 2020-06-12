@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.Order_ReturnsMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.Order_Returns">
+    <id column="return_id" jdbcType="VARCHAR" property="returnId" />
+    <result column="return_status" jdbcType="CHAR" property="returnStatus" />
+    <result column="return_money" jdbcType="VARCHAR" property="returnMoney" />
+    <result column="return_time" jdbcType="VARCHAR" property="returnTime" />
+    <result column="return_reason" jdbcType="VARCHAR" property="returnReason" />
+    <result column="order_payment" jdbcType="VARCHAR" property="orderPayment" />
+    <result column="return_audit_status" jdbcType="CHAR" property="returnAuditStatus" />
+    <result column="return_audit_explain" jdbcType="CHAR" property="returnAuditExplain" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    return_id, return_status, return_money, return_time, return_reason, order_payment, 
+    return_audit_status, return_audit_explain, order_id
+  </sql>
+  <select id="selectOrderByTime" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select return_id from order_returns WHERE return_time=#{date}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_returns
+    where return_id = #{returnId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order_returns
+    where return_id = #{returnId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hx.dc.entity.Order_Returns">
+    insert into order_returns (return_id, return_status, return_money, 
+      return_time, return_reason, order_payment, 
+      return_audit_status, return_audit_explain, order_id
+      )
+    values (#{returnId,jdbcType=VARCHAR}, #{returnStatus,jdbcType=CHAR}, #{returnMoney,jdbcType=VARCHAR}, 
+      #{returnTime}, #{returnReason,jdbcType=VARCHAR}, #{orderPayment,jdbcType=VARCHAR},
+      #{returnAuditStatus,jdbcType=CHAR}, #{returnAuditExplain,jdbcType=CHAR}, #{orderId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.Order_Returns">
+    insert into order_returns
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="returnId != null">
+        return_id,
+      </if>
+      <if test="returnStatus != null">
+        return_status,
+      </if>
+      <if test="returnMoney != null">
+        return_money,
+      </if>
+      <if test="returnTime != null">
+        return_time,
+      </if>
+      <if test="returnReason != null">
+        return_reason,
+      </if>
+      <if test="orderPayment != null">
+        order_payment,
+      </if>
+      <if test="returnAuditStatus != null">
+        return_audit_status,
+      </if>
+      <if test="returnAuditExplain != null">
+        return_audit_explain,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="returnId != null">
+        #{returnId,jdbcType=VARCHAR},
+      </if>
+      <if test="returnStatus != null">
+        #{returnStatus,jdbcType=CHAR},
+      </if>
+      <if test="returnMoney != null">
+        #{returnMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="returnTime != null">
+        #{returnTime},
+      </if>
+      <if test="returnReason != null">
+        #{returnReason,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPayment != null">
+        #{orderPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="returnAuditStatus != null">
+        #{returnAuditStatus,jdbcType=CHAR},
+      </if>
+      <if test="returnAuditExplain != null">
+        #{returnAuditExplain,jdbcType=CHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.Order_Returns">
+    update order_returns
+    <set>
+      <if test="returnStatus != null">
+        return_status = #{returnStatus,jdbcType=CHAR},
+      </if>
+      <if test="returnMoney != null">
+        return_money = #{returnMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="returnTime != null">
+        return_time = #{returnTime},
+      </if>
+      <if test="returnReason != null">
+        return_reason = #{returnReason,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPayment != null">
+        order_payment = #{orderPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="returnAuditStatus != null">
+        return_audit_status = #{returnAuditStatus,jdbcType=CHAR},
+      </if>
+      <if test="returnAuditExplain != null">
+        return_audit_explain = #{returnAuditExplain,jdbcType=CHAR},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where return_id = #{returnId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.Order_Returns">
+    update order_returns
+    set return_status = #{returnStatus,jdbcType=CHAR},
+      return_money = #{returnMoney,jdbcType=VARCHAR},
+      return_time = #{returnTime},
+      return_reason = #{returnReason,jdbcType=VARCHAR},
+      order_payment = #{orderPayment,jdbcType=VARCHAR},
+      return_audit_status = #{returnAuditStatus,jdbcType=CHAR},
+      return_audit_explain = #{returnAuditExplain,jdbcType=CHAR},
+      order_id = #{orderId,jdbcType=VARCHAR}
+    where return_id = #{returnId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectPage" parameterType="Order_Returns" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+    from order_returns
+    <where>
+      <if test="returnId!=null &amp;&amp;returnId!=''">and return_id = #{returnId}</if>
+      <if test="returnStatus!=null">and return_status = #{returnStatus}</if>
+      <if test="returnMoney!=null">and return_money = #{returnMoney}</if>
+      <if test="returnTime!=null">and return_time = #{returnTime}</if>
+      <if test="returnReason!=null">and return_reason = #{returnReason}</if>
+      <if test="orderPayment!=null">and order_payment = #{orderPayment}</if>
+      <if test="returnAuditStatus!=null">and return_audit_status = #{returnAuditStatus}</if>
+      <if test="returnAuditExplain!=null">and return_audit_explain = #{returnAuditExplain}</if>
+      <if test="orderId!=null &amp;&amp;orderId!=''">and order_id = #{orderId}</if>
+    </where>
+    <!-- 使用分页插件后，这句：limit start,pageSize不用再写了  -->
+  </select>
+</mapper>

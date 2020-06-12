@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.Goods">
+    <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="total_name" jdbcType="VARCHAR" property="totalName" />
+    <result column="sub_name" jdbcType="VARCHAR" property="subName" />
+    <result column="goods_image" jdbcType="VARCHAR" property="goodsImage" />
+    <result column="goods_number" jdbcType="VARCHAR" property="goodsNumber" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_price" jdbcType="INTEGER" property="goodsPrice" />
+    <result column="goods_describe" jdbcType="VARCHAR" property="goodsDescribe" />
+    <result column="goods_type" jdbcType="VARCHAR" property="goodsType" />
+    <result column="goods_sell" jdbcType="VARCHAR" property="goodsSell" />
+    <result column="goods_after" jdbcType="VARCHAR" property="goodsAfter" />
+    <result column="goods_status" jdbcType="CHAR" property="goodsStatus" />
+    <result column="goods_date" jdbcType="TIMESTAMP" property="goodsDate" />
+    <result column="goods_delete" jdbcType="CHAR" property="goodsDelete" />
+    <result column="menu_parameter" jdbcType="VARCHAR" property="menuParameter" />
+    <result column="menu_styleselect" jdbcType="VARCHAR" property="menuStyleselect" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goods_id, menu_name, total_name, sub_name, goods_image, goods_number, goods_name, 
+    goods_price, goods_describe, goods_type, goods_sell, goods_after, goods_status, goods_date, 
+    goods_delete, menu_parameter, menu_styleselect
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hx.dc.entity.Goods">
+    insert into goods (goods_id, menu_name, total_name, 
+      sub_name, goods_image, goods_number, 
+      goods_name, goods_price, goods_describe, 
+      goods_type, goods_sell, goods_after, 
+      goods_status, goods_date, goods_delete, 
+      menu_parameter, menu_styleselect)
+    values (#{goodsId,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{totalName,jdbcType=VARCHAR}, 
+      #{subName,jdbcType=VARCHAR}, #{goodsImage,jdbcType=VARCHAR}, #{goodsNumber,jdbcType=VARCHAR}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=INTEGER}, #{goodsDescribe,jdbcType=VARCHAR}, 
+      #{goodsType,jdbcType=VARCHAR}, #{goodsSell,jdbcType=VARCHAR}, #{goodsAfter,jdbcType=VARCHAR}, 
+      #{goodsStatus,jdbcType=CHAR}, #{goodsDate,jdbcType=TIMESTAMP}, #{goodsDelete,jdbcType=CHAR}, 
+      #{menuParameter,jdbcType=VARCHAR}, #{menuStyleselect,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="menuName != null">
+        menu_name,
+      </if>
+      <if test="totalName != null">
+        total_name,
+      </if>
+      <if test="subName != null">
+        sub_name,
+      </if>
+      <if test="goodsImage != null">
+        goods_image,
+      </if>
+      <if test="goodsNumber != null">
+        goods_number,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="goodsDescribe != null">
+        goods_describe,
+      </if>
+      <if test="goodsType != null">
+        goods_type,
+      </if>
+      <if test="goodsSell != null">
+        goods_sell,
+      </if>
+      <if test="goodsAfter != null">
+        goods_after,
+      </if>
+      <if test="goodsStatus != null">
+        goods_status,
+      </if>
+      <if test="goodsDate != null">
+        goods_date,
+      </if>
+      <if test="goodsDelete != null">
+        goods_delete,
+      </if>
+      <if test="menuParameter != null">
+        menu_parameter,
+      </if>
+      <if test="menuStyleselect != null">
+        menu_styleselect,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalName != null">
+        #{totalName,jdbcType=VARCHAR},
+      </if>
+      <if test="subName != null">
+        #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImage != null">
+        #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNumber != null">
+        #{goodsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDescribe != null">
+        #{goodsDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null">
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSell != null">
+        #{goodsSell,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAfter != null">
+        #{goodsAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null">
+        #{goodsStatus,jdbcType=CHAR},
+      </if>
+      <if test="goodsDate != null">
+        #{goodsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsDelete != null">
+        #{goodsDelete,jdbcType=CHAR},
+      </if>
+      <if test="menuParameter != null">
+        #{menuParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="menuStyleselect != null">
+        #{menuStyleselect,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.Goods">
+    update goods
+    <set>
+      <if test="menuName != null">
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalName != null">
+        total_name = #{totalName,jdbcType=VARCHAR},
+      </if>
+      <if test="subName != null">
+        sub_name = #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImage != null">
+        goods_image = #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNumber != null">
+        goods_number = #{goodsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDescribe != null">
+        goods_describe = #{goodsDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsType != null">
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsSell != null">
+        goods_sell = #{goodsSell,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsAfter != null">
+        goods_after = #{goodsAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStatus != null">
+        goods_status = #{goodsStatus,jdbcType=CHAR},
+      </if>
+      <if test="goodsDate != null">
+        goods_date = #{goodsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsDelete != null">
+        goods_delete = #{goodsDelete,jdbcType=CHAR},
+      </if>
+      <if test="menuParameter != null">
+        menu_parameter = #{menuParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="menuStyleselect != null">
+        menu_styleselect = #{menuStyleselect,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.Goods">
+    update goods
+    set menu_name = #{menuName,jdbcType=VARCHAR},
+      total_name = #{totalName,jdbcType=VARCHAR},
+      sub_name = #{subName,jdbcType=VARCHAR},
+      goods_image = #{goodsImage,jdbcType=VARCHAR},
+      goods_number = #{goodsNumber,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=INTEGER},
+      goods_describe = #{goodsDescribe,jdbcType=VARCHAR},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      goods_sell = #{goodsSell,jdbcType=VARCHAR},
+      goods_after = #{goodsAfter,jdbcType=VARCHAR},
+      goods_status = #{goodsStatus,jdbcType=CHAR},
+      goods_date = #{goodsDate,jdbcType=TIMESTAMP},
+      goods_delete = #{goodsDelete,jdbcType=CHAR},
+      menu_parameter = #{menuParameter,jdbcType=VARCHAR},
+      menu_styleselect = #{menuStyleselect,jdbcType=VARCHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <!-- 分页查询,sql不用分页的信息，留给插件处理 -->
+  <select id="selectPage" parameterType="Goods" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from goods
+    <where>
+
+    </where>
+    <!-- 使用分页插件后，这句：limit start,pageSize不用再写了  -->
+  </select>
+  <select id="selectPage2" resultMap="BaseResultMap">
+    select goods_id,goods_image,goods_name,goods_price
+    from goods
+    where goods_id in
+    <foreach collection="list" item="g" open="(" close=")" separator=",">
+      #{g.goodsId}
+    </foreach>
+  </select>
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.Order_Return_DetailsMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.Order_Return_Details">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="return_id" jdbcType="VARCHAR" property="returnId" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="return_num" jdbcType="INTEGER" property="returnNum" />
+    <result column="return_money" jdbcType="DOUBLE" property="returnMoney" />
+    <result column="goods_price" jdbcType="DOUBLE" property="goodsPrice" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, return_id, order_id, return_num, return_money, goods_price, goods_name
+  </sql>
+  <select id="selectDetails" resultMap="BaseResultMap">
+  select goods_name,return_num,return_money from order_return_details where
+  <foreach collection="list" item="id" separator="or">
+    return_id=#{id}
+  </foreach>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_return_details
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order_return_details
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hx.dc.entity.Order_Return_Details">
+    insert into order_return_details (id, return_id, order_id, 
+      return_num, return_money, goods_price, 
+      goods_name)
+    values (#{id,jdbcType=INTEGER}, #{returnId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, 
+      #{returnNum,jdbcType=INTEGER}, #{returnMoney,jdbcType=DOUBLE}, #{goodsPrice,jdbcType=DOUBLE}, 
+      #{goodsName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.Order_Return_Details">
+    insert into order_return_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="returnId != null">
+        return_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="returnNum != null">
+        return_num,
+      </if>
+      <if test="returnMoney != null">
+        return_money,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="returnId != null">
+        #{returnId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="returnNum != null">
+        #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnMoney != null">
+        #{returnMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.Order_Return_Details">
+    update order_return_details
+    <set>
+      <if test="returnId != null">
+        return_id = #{returnId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="returnNum != null">
+        return_num = #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnMoney != null">
+        return_money = #{returnMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.Order_Return_Details">
+    update order_return_details
+    set return_id = #{returnId,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      return_num = #{returnNum,jdbcType=INTEGER},
+      return_money = #{returnMoney,jdbcType=DOUBLE},
+      goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      goods_name = #{goodsName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- 分页查询,sql不用分页的信息，留给插件处理 -->
+  <select id="selectPage" parameterType="Order_Return_Details" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from order_return_details
+    <where>
+      <if test="returnId!=null &amp;&amp; returnId!=''">and return_id = #{returnId}</if>
+      <if test="orderId!=null &amp;&amp; orderId!=''">and order_id = #{orderId}</if>
+
+    </where>
+    <!-- 使用分页插件后，这句：limit start,pageSize不用再写了  -->
+  </select>
+</mapper>

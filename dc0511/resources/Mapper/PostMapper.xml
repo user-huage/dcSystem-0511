@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.PostMapper">
+    <resultMap id="PostResultMap" type="post">
+        <id column="post_id" property="postId"/>
+        <result column="dept_type" property="deptType"/>
+        <result column="total_name" property="totalName"/>
+        <result column="sub_name" property="subName"/>
+        <result column="post_name" property="postName"/>
+        <result column="remarks" property="remarks"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <!--获取所有职务-->
+    <select id="queryAllPost" parameterType="post" resultMap="PostResultMap">
+        SELECT * FROM post
+        <where>
+            <if test="totalName!=null&amp;&amp;totalName!=''">and total_name=#{totalName}</if>
+            <if test="subName!=null&amp;&amp;subName!=''">and sub_name=#{subName}</if>
+            <if test="status!=null&amp;&amp;status!=''">and status=#{status}</if>
+        </where>
+    </select>
+    <!--异步加载总部门-->
+    <select id="ajaxQueryTotalDept" resultMap="com.hx.dc.mapper.DeptMapper.DeptResultMap">
+        SELECT dep_id,dep_name FROM dept WHERE parent_id=0 and status='1';
+    </select>
+    <!--异步加载子部门-->
+    <select id="ajaxQuerySubDept" resultMap="com.hx.dc.mapper.DeptMapper.DeptResultMap" parameterType="string">
+        SELECT dep_id,dep_name
+        FROM dept
+        WHERE parent_id=(SELECT dep_id FROM dept WHERE dep_name=#{depName}) and status='1';
+    </select>
+    <!--通过名称查找总部门-->
+    <select id="ajaxQueryTotalDeptByName" parameterType="post" resultMap="com.hx.dc.mapper.DeptMapper.DeptResultMap">
+        SELECT dep_id,dep_name FROM dept WHERE dep_name=#{totalName};
+    </select>
+    <!--通过名称查找职务-->
+    <select id="queryPostByPostName" parameterType="post" resultMap="PostResultMap">
+        SELECT * FROM post
+        <where>
+            <if test="totalName!=null">and total_name=#{totalName}</if>
+            <if test="subName!=null">and sub_name=#{subName}</if>
+            <if test="subName==null">and sub_name is null</if>
+            <if test="postName!=null">and post_name=#{postName}</if>
+        </where>
+    </select>
+    <!--添加职务-->
+    <insert id="insertPost" parameterType="post">
+        insert into post
+        (dept_type,total_name<if test="subName!=null &amp;&amp; subName!=''">,sub_name</if>,post_name<if test="remarks!=null &amp;&amp; remarks!=''">,remarks</if>,status)
+        VALUES
+        (#{deptType},#{totalName}
+        <if test="subName!=null &amp;&amp; subName!=''">,#{subName}</if>,#{postName}
+        <if test="remarks!=null &amp;&amp; remarks!=''">,#{remarks}</if>,#{status});
+    </insert>
+    <!--修改部门-->
+    <update id="updatePost" parameterType="post">
+        UPDATE post
+        set dept_type=#{deptType},total_name=#{totalName}
+        <if test="subName!=null &amp;&amp; subName!=''">,sub_name=#{subName}</if>
+        ,post_name=#{postName}<if test="remarks!=null &amp;&amp; remarks!=''">,remarks=#{remarks}</if>,status=#{status}
+        WHERE post_id=#{postId};
+    </update>
+    <!--在员工表查找职务-->
+    <select id="queryPostToEmp" resultMap="com.hx.dc.mapper.EmpMapper.EmpResultMap">
+        SELECT * FROM emp where post_id in
+        <foreach collection="array" item="postId" open="(" close=")" separator=",">
+            #{postId}
+        </foreach>
+    </select>
+    <!--删除职务-->
+    <!--<delete id="deletePost">-->
+        <!--DELETE from post where post_id in-->
+        <!--<foreach collection="array" item="postId" open="(" close=")" separator=",">-->
+            <!--#{postId}-->
+        <!--</foreach>-->
+    <!--</delete>-->
+    <update id="deletePost">
+        update post set status='0' where post_id in
+        <foreach collection="array" item="postId" open="(" close=")" separator=",">
+            #{postId}
+        </foreach>
+    </update>
+</mapper>

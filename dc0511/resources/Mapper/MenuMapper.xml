@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.MenuMapper">
+    <resultMap id="MenuResultMap" type="menu">
+        <id property="menuId" column="menu_id"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="url" column="url"/>
+        <result property="menuType" column="menu_type"/>
+        <result property="powerName" column="power_name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="status" column="status"/>
+        <result property="sort" column="sort"/>
+    </resultMap>
+    <!--查找所有目录-->
+    <select id="queryAllMenu" resultMap="MenuResultMap">
+        SELECT * FROM menu
+    </select>
+    <!--通过名称查找目录-->
+    <select id="queryMenuByName" parameterType="menu" resultMap="MenuResultMap">
+        SELECT * FROM menu WHERE menu_name=#{menuName};
+    </select>
+    <!--添加目录-->
+    <insert id="insertMenu" parameterType="menu">
+        INSERT INTO menu(menu_name<if test="url!=null &amp;&amp; url!=''">,url</if>,menu_type<if test="powerName!=null &amp;&amp; powerName!=''">,power_name</if>,parent_id,status<if test="sort!=null &amp;&amp; sort!=''">,sort</if>)
+        VALUES (#{menuName}<if test="url!=null &amp;&amp; url!=''">,#{url}</if>,#{menuType}<if test="powerName!=null &amp;&amp; powerName!=''">,#{powerName}</if>,#{parentId},#{status}<if test="sort!=null &amp;&amp; sort!=''">,#{sort}</if>);
+    </insert>
+    <!--修改目录-->
+    <update id="updateMenu" parameterType="menu">
+        UPDATE menu SET menu_name=#{menuName}<if test="url!=null &amp;&amp;  url!=''">,url=#{url}</if>,menu_type=#{menuType}
+        <if test="powerName!=null &amp;&amp;  powerName!=''">,power_name=#{powerName}</if>,status=#{status}
+        <if test="sort!=null ||  sort!=''">,sort=#{sort}</if>
+        WHERE menu_id=#{menuId};
+    </update>
+    <!--删除目录-->
+    <!--<delete id="deleteMenu">-->
+        <!--DELETE from menu WHERE menu_id in-->
+        <!--<foreach collection="array" item="menuId" open="(" close=")" separator=",">-->
+            <!--#{menuId}-->
+        <!--</foreach>-->
+    <!--</delete>-->
+    <update id="deleteMenu" parameterType="_int">
+        update menu set status='0' where menu_id=#{menuId};
+    </update>
+</mapper>

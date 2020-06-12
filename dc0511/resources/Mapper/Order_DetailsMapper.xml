@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.Order_DetailsMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.Order_Details">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="good_number" jdbcType="INTEGER" property="goodNumber" />
+    <result column="goods_price" jdbcType="DOUBLE" property="goodsPrice" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="order_details_amount" jdbcType="DOUBLE" property="orderDetailsAmount" />
+    <result column="order_details_payment" jdbcType="CHAR" property="orderDetailsPayment" />
+    <result column="order_details_paytime" jdbcType="DATE" property="orderDetailsPaytime" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_image" jdbcType="VARCHAR" property="goodsImage" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, goods_name, good_number, goods_price, order_id, order_details_amount, order_details_payment, 
+    order_details_paytime, goods_id, goods_image
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_details
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectDetails" resultMap="BaseResultMap">
+  select order_id,goods_name,good_number,goods_price,order_details_paytime from order_details where
+  <foreach collection="list" item="id" separator="or">
+    order_id=#{id}
+  </foreach>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order_details
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hx.dc.entity.Order_Details">
+    insert into order_details (id, goods_name, good_number, 
+      goods_price, order_id, order_details_amount, 
+      order_details_payment, order_details_paytime, goods_id, 
+      goods_image)
+    values (#{id,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{goodNumber,jdbcType=INTEGER}, 
+      #{goodsPrice,jdbcType=DOUBLE}, #{orderId,jdbcType=VARCHAR}, #{orderDetailsAmount,jdbcType=DOUBLE}, 
+      #{orderDetailsPayment,jdbcType=CHAR}, #{orderDetailsPaytime,jdbcType=DATE}, #{goodsId,jdbcType=INTEGER}, 
+      #{goodsImage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.Order_Details">
+    insert into order_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodNumber != null">
+        good_number,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderDetailsAmount != null">
+        order_details_amount,
+      </if>
+      <if test="orderDetailsPayment != null">
+        order_details_payment,
+      </if>
+      <if test="orderDetailsPaytime != null">
+        order_details_paytime,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsImage != null">
+        goods_image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodNumber != null">
+        #{goodNumber,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailsAmount != null">
+        #{orderDetailsAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderDetailsPayment != null">
+        #{orderDetailsPayment,jdbcType=CHAR},
+      </if>
+      <if test="orderDetailsPaytime != null">
+        #{orderDetailsPaytime,jdbcType=DATE},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImage != null">
+        #{goodsImage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.Order_Details">
+    update order_details
+    <set>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodNumber != null">
+        good_number = #{goodNumber,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailsAmount != null">
+        order_details_amount = #{orderDetailsAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="orderDetailsPayment != null">
+        order_details_payment = #{orderDetailsPayment,jdbcType=CHAR},
+      </if>
+      <if test="orderDetailsPaytime != null">
+        order_details_paytime = #{orderDetailsPaytime,jdbcType=DATE},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsImage != null">
+        goods_image = #{goodsImage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.Order_Details">
+    update order_details
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      good_number = #{goodNumber,jdbcType=INTEGER},
+      goods_price = #{goodsPrice,jdbcType=DOUBLE},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      order_details_amount = #{orderDetailsAmount,jdbcType=DOUBLE},
+      order_details_payment = #{orderDetailsPayment,jdbcType=CHAR},
+      order_details_paytime = #{orderDetailsPaytime,jdbcType=DATE},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_image = #{goodsImage,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 分页查询,sql不用分页的信息，留给插件处理 -->
+  <select id="selectPage" parameterType="Order_Details" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from order_details
+    <where>
+      <if test="orderDetailsPayment!=null &amp;&amp; returnId!=''">and order_details_payment = #{orderDetailsPayment}</if>
+      <if test="orderId!=null &amp;&amp; orderId!=''">and order_id = #{orderId}</if>
+
+    </where>
+    <!-- 使用分页插件后，这句：limit start,pageSize不用再写了  -->
+  </select>
+  <insert id="insertList">
+    insert into order_details(
+    goods_name, good_number, goods_price, order_id, order_details_amount, order_details_payment,
+    order_details_paytime, goods_id, goods_image
+    ) values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.goodsName},#{item.goodNumber},
+      #{item.goodsPrice},#{item.orderId},#{item.orderDetailsAmount},
+      #{item.orderDetailsPayment},#{item.orderDetailsPaytime},#{item.goodsId},
+      #{item.goodsImage})
+    </foreach>
+  </insert>
+
+</mapper>

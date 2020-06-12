@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/websocket
+       http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+    <!--启用注解-->
+    <!-- 引用自定义类型转换器 -->
+    <mvc:annotation-driven></mvc:annotation-driven>
+    <!--配置扫描包的相关目录-->
+
+    <!--<mvc:default-servlet-handler/>-->
+    <!-- 支持servlet与jsp视图解析，可进行进一步处理，此步可省略， -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 可以加前缀或后缀 -->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--<context:component-scan base-package="com.hx.dc.controller"/>-->
+    <!-- 扫描所有的controller 但是不扫描service -->
+    <context:component-scan base-package="com.hx.dc.controller">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller" />
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Service" />
+    </context:component-scan>
+
+
+    <!-- 配置类型转换器工厂 -->
+    <!--  <bean id="converterService"
+            class="org.springframework.context.support.ConversionServiceFactoryBean">
+          &lt;!&ndash; 注册自定义类型转换器  &ndash;&gt;
+          <property name="converters">
+              &lt;!&ndash;也可以使用list&ndash;&gt;
+              <array>
+                  &lt;!&ndash; 配置自定义类型转换器 &ndash;&gt;
+                  <bean class="com.hx.myconverter.StringToDateConverter"></bean>
+                  &lt;!&ndash; 添加其它自定义类型转换器 &ndash;&gt;
+              </array>
+              &lt;!&ndash;/list&ndash;&gt;
+          </property>
+      </bean>-->
+
+    <!--文件上传使用， 配置multipartResolver，id名称为约定好的 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 配置文件（每次上传的所有文件总大小)大小,单位为b, 1024000表示1000kb  -->
+        <property name="maxUploadSize" value="1024000" />
+    </bean>
+
+    <!-- 只要实现了HandlerExceptionResolver接口就是全局异常处理器 -->
+    <bean class="com.hx.dc.resolver.ExceptionResolver"></bean>
+
+    <!-- Spring Web Socket接口配置 -->
+    <bean id="websocket" class="com.hx.dc.handler.SystemWebSocketHandler"/>
+    <websocket:handlers>
+        <websocket:mapping path="/echo" handler="websocket" />
+        <websocket:handshake-interceptors>
+            <bean class="com.hx.dc.Interceptor.MyHandshakeInterceptor" />
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
+
+    <!--PropertiesFactoryBean对properties文件可用 ，可以用来注入properties配置文件的信息 -->
+    <!-- <bean id="uploadProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+         <property name="location" value="classpath:upload.properties"></property>
+     </bean>-->
+
+     <!--只要实现了HandlerExceptionResolver接口就是全局异常处理器 -->
+   <!-- <bean class="com.hx.dc.resolver.ExceptionResolver"></bean>-->
+
+    <!-- 配置spring_mvc.xml拦截器 -->
+        <mvc:interceptors>
+             <!--默认拦截DispatcherServlet指定的后缀（这里是.mvc）-->
+             <!--配置多个拦截器，将按配置顺序执行-->
+            <mvc:interceptor>
+                 <!--如果需要拦截所有，可以配置“/**”表示拦截所有url-->
+                <mvc:mapping path="/**"/>
+                <bean class="com.hx.dc.Interceptor.HandlerInterceptor1"></bean>
+            </mvc:interceptor>
+           <!-- <mvc:interceptor>
+                 如果需要拦截所有，可以发下配置“/**”表示拦截所有url
+                <mvc:mapping path="/**"/>
+                <bean class="com.hx.interceptor.LoginInterceptor2"></bean>
+            </mvc:interceptor>-->
+        </mvc:interceptors>
+</beans>

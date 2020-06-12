@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.GoodsOrderMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.GoodsOrder">
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="DiningTable_Id" jdbcType="VARCHAR" property="diningtableId" />
+    <result column="DiningTable_Name" jdbcType="VARCHAR" property="diningtableName" />
+    <result column="dep_Name" jdbcType="VARCHAR" property="depName" />
+    <result column="goods_number" jdbcType="VARCHAR" property="goodsNumber" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_image" jdbcType="VARCHAR" property="goodsImage" />
+    <result column="place_number" jdbcType="VARCHAR" property="placeNumber" />
+    <result column="return_number" jdbcType="VARCHAR" property="returnNumber" />
+    <result column="cook_number" jdbcType="VARCHAR" property="cookNumber" />
+    <result column="State" jdbcType="INTEGER" property="state" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="shopping_explai" jdbcType="VARCHAR" property="shoppingExplai" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, DiningTable_Id, DiningTable_Name, dep_Name, goods_number, goods_name,
+    goods_image, place_number, return_number, cook_number, State, start_time, shopping_explai
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_table
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order_table
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.hx.dc.entity.GoodsOrder">
+    insert into order_table ( order_id, DiningTable_Id,
+      DiningTable_Name, dep_Name, goods_number,
+      goods_name, goods_image, place_number, 
+      return_number, cook_number, State, 
+      start_time, shopping_explai)
+    values #{orderId,jdbcType=VARCHAR}, #{diningtableId,jdbcType=VARCHAR},
+      #{diningtableName,jdbcType=VARCHAR}, #{depName,jdbcType=VARCHAR}, #{goodsNumber,jdbcType=VARCHAR},
+      #{goodsName,jdbcType=VARCHAR}, #{goodsImage,jdbcType=VARCHAR}, #{placeNumber,jdbcType=VARCHAR}, 
+      #{returnNumber,jdbcType=VARCHAR}, #{cookNumber,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{startTime,jdbcType=VARCHAR}, #{shoppingExplai,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.GoodsOrder">
+    insert into order_table
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="diningtableId != null">
+        DiningTable_Id,
+      </if>
+      <if test="diningtableName != null">
+        DiningTable_Name,
+      </if>
+      <if test="depName != null">
+        dep_Name,
+      </if>
+      <if test="goodsNumber != null">
+        goods_number,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsImage != null">
+        goods_image,
+      </if>
+      <if test="placeNumber != null">
+        place_number,
+      </if>
+      <if test="returnNumber != null">
+        return_number,
+      </if>
+      <if test="cookNumber != null">
+        cook_number,
+      </if>
+      <if test="state != null">
+        State,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="shoppingExplai != null">
+        shopping_explai,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="diningtableId != null">
+        #{diningtableId,jdbcType=VARCHAR},
+      </if>
+      <if test="diningtableName != null">
+        #{diningtableName,jdbcType=VARCHAR},
+      </if>
+      <if test="depName != null">
+        #{depName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNumber != null">
+        #{goodsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImage != null">
+        #{goodsImage,jdbcType=VARCHAR},
+      </if>
+      <if test="placeNumber != null">
+        #{placeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="returnNumber != null">
+        #{returnNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cookNumber != null">
+        #{cookNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="shoppingExplai != null">
+        #{shoppingExplai,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.GoodsOrder">
+    update order_table
+    <set>
+      <if test="placeNumber != null">
+        place_number = #{placeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="returnNumber != null">
+        return_number = #{returnNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cookNumber != null">
+        cook_number = #{cookNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        State = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where  dep_Name = #{depName,jdbcType=VARCHAR}
+    and diningtable_Id = #{diningtableId,jdbcType=VARCHAR}
+    and order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.GoodsOrder">
+    update order_table
+    set
+      State = #{state,jdbcType=INTEGER},
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <!--//(1,待制作 2，正在制作，3，制作完成，4，以上菜 5，订单退订 ,6，删除)-->
+  <select id="selectPage" parameterType="com.hx.dc.entity.GoodsOrder" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List" /> from  order_table where state &lt; 5
+
+      <if test="orderId != null">
+       and  order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="diningtableId != null">
+        and diningtable_Id = #{diningtableId,jdbcType=VARCHAR},
+      </if>
+      <if test="diningtableName != null">
+       and diningtable_Name = #{diningtableName,jdbcType=VARCHAR},
+      </if>
+      <if test="depName != null">
+        and dep_Name = #{depName,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        and State = #{state,jdbcType=INTEGER},
+      </if>
+
+  </select>
+
+  <select id="selectListAll"  resultMap="BaseResultMap" >
+  select <include refid="Base_Column_List" /> from order_table
+  </select>
+
+</mapper>

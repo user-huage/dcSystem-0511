@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.Order">
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="DiningTable_Id" jdbcType="VARCHAR" property="diningtableId" />
+    <result column="order_eattype" jdbcType="CHAR" property="orderEattype" />
+    <result column="dep_id" jdbcType="INTEGER" property="depId" />
+    <result column="order_amount" jdbcType="VARCHAR" property="orderAmount" />
+    <result column="order_money" jdbcType="VARCHAR" property="orderMoney" />
+    <result column="order_status" jdbcType="CHAR" property="orderStatus" />
+    <result column="order_payment" jdbcType="CHAR" property="orderPayment" />
+    <result column="order_progress" jdbcType="CHAR" property="orderProgress" />
+    <result column="order_time" jdbcType="VARCHAR" property="orderTime" />
+    <result column="order_paytime" jdbcType="VARCHAR" property="orderPaytime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, DiningTable_Id, order_eattype, dep_id, order_amount, order_money, order_status, 
+    order_payment, order_progress, order_time, order_paytime
+  </sql>
+  <select id="selectOrderByTime" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select order_id from `order` WHERE order_time=#{date}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `order`
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hx.dc.entity.Order">
+    insert into `order` (order_id, DiningTable_Id, order_eattype,
+      dep_id, order_amount, order_money, 
+      order_status, order_payment, order_progress, 
+      order_time, order_paytime)
+    values (#{orderId}, #{diningtableId}, #{orderEattype},
+      #{depId}, #{orderAmount}, #{orderMoney},
+      #{orderStatus}, #{orderPayment}, #{orderProgress},
+      #{orderTime,}, #{orderPaytime})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.Order">
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="diningtableId != null">
+        DiningTable_Id,
+      </if>
+      <if test="orderEattype != null">
+        order_eattype,
+      </if>
+      <if test="depId != null">
+        dep_id,
+      </if>
+      <if test="orderAmount != null">
+        order_amount,
+      </if>
+      <if test="orderMoney != null">
+        order_money,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="orderPayment != null">
+        order_payment,
+      </if>
+      <if test="orderProgress != null">
+        order_progress,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+      <if test="orderPaytime != null">
+        order_paytime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="diningtableId != null">
+        #{diningtableId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderEattype != null">
+        #{orderEattype,jdbcType=CHAR},
+      </if>
+      <if test="depId != null">
+        #{depId,jdbcType=INTEGER},
+      </if>
+      <if test="orderAmount != null">
+        #{orderAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="orderMoney != null">
+        #{orderMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="orderPayment != null">
+        #{orderPayment,jdbcType=CHAR},
+      </if>
+      <if test="orderProgress != null">
+        #{orderProgress,jdbcType=CHAR},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPaytime != null">
+        #{orderPaytime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.Order">
+    update order
+    <set>
+      <if test="diningtableId != null">
+        DiningTable_Id = #{diningtableId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderEattype != null">
+        order_eattype = #{orderEattype,jdbcType=CHAR},
+      </if>
+      <if test="depId != null">
+        dep_id = #{depId,jdbcType=INTEGER},
+      </if>
+      <if test="orderAmount != null">
+        order_amount = #{orderAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="orderMoney != null">
+        order_money = #{orderMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="orderPayment != null">
+        order_payment = #{orderPayment,jdbcType=CHAR},
+      </if>
+      <if test="orderProgress != null">
+        order_progress = #{orderProgress,jdbcType=CHAR},
+      </if>
+      <if test="orderTime != null">
+        order_time = #{orderTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPaytime != null">
+        order_paytime = #{orderPaytime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.Order">
+    update order
+    set DiningTable_Id = #{diningtableId,jdbcType=VARCHAR},
+      order_eattype = #{orderEattype,jdbcType=CHAR},
+      dep_id = #{depId,jdbcType=INTEGER},
+      order_amount = #{orderAmount,jdbcType=VARCHAR},
+      order_money = #{orderMoney,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=CHAR},
+      order_payment = #{orderPayment,jdbcType=CHAR},
+      order_progress = #{orderProgress,jdbcType=CHAR},
+      order_time = #{orderTime,jdbcType=VARCHAR},
+      order_paytime = #{orderPaytime,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <!-- 分页查询,sql不用分页的信息，留给插件处理 -->
+  <select id="selectPage" parameterType="Order" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+    from `order`
+    <where>
+      <if test="diningtableId!=null &amp;&amp; diningtableId!=''">and DiningTable_Id = #{diningtableId}</if>
+      <if test="orderId!=null &amp;&amp; orderId!=''">and order_id = #{orderId}</if>
+      <if test="depId!=null &amp;&amp; depId!=''">and dep_id = #{depId}</if>
+      <if test="orderStatus!=null &amp;&amp; orderStatus!=''">and order_status = #{orderStatus}</if>
+      <if test="orderEattype!=null &amp;&amp; orderEattype!=''">and order_eattype = #{orderEattype}</if>
+    </where>
+    <!-- 使用分页插件后，这句：limit start,pageSize不用再写了  -->
+  </select>
+</mapper>

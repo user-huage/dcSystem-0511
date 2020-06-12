@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.TableMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.Table">
+    <result column="dep_Name" property="depName" />
+    <result column="DiningTable_Id"  property="diningtableId" />
+    <result column="DiningTable_Name"   property="diningtableName" />
+    <result column="Seating"   property="seating" />
+    <result column="QR_code"   property="qrCode" />
+    <result column="State"   property="state" />
+    <result column="Update_time"   property="updateTime" />
+    <result column="Creat_time"   property="creatTime" />
+    <result column="user_Id"  property="userId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+ dep_Name, DiningTable_Id, DiningTable_Name,Seating, QR_code, State, Update_time, Creat_time,
+    user_Id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_management
+   where dep_Name = #{depName,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from table_management
+    where dep_Name = #{depName,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.hx.dc.entity.Table">
+    insert into table_management (dep_Name, DiningTable_Id,
+      DiningTable_Name,Seating, QR_code, State,
+   Creat_time, user_Id
+      )
+    values (#{depName,jdbcType=VARCHAR}, #{diningtableId,jdbcType=VARCHAR},
+      #{diningtableName,jdbcType=VARCHAR},#{seating}, #{qrCode,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
+     #{creatTime,jdbcType=DATE}, #{userId,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.Table">
+    insert into table_management
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="depName != null">
+          dep_Name,
+      </if>
+      <if test="diningtableId != null">
+        DiningTable_Id,
+      </if>
+      <if test="diningtableName != null">
+        DiningTable_Name,
+      </if>
+      <if test="seating != null">
+        Seating,
+      </if>
+      <if test="qrCode != null">
+        QR_code,
+      </if>
+      <if test="state != null">
+        State,
+      </if>
+      <if test="updateTime != null">
+        Update_time,
+      </if>
+      <if test="creatTime != null">
+        Creat_time,
+      </if>
+      <if test="userId != null">
+        user_Id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="depName != null">
+        #{depName,jdbcType=VARCHAR},
+      </if>
+      <if test="diningtableId != null">
+        #{diningtableId,jdbcType=VARCHAR},
+      </if>
+      <if test="diningtableName != null">
+        #{diningtableName,jdbcType=VARCHAR},
+      </if>
+      <if test="seating != null">
+        #{seating},
+      </if>
+      <if test="qrCode != null">
+        #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=DATE},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.Table">
+    update table_management
+    <set>
+      <if test="diningtableName != null">
+        DiningTable_Name = #{diningtableName,jdbcType=VARCHAR},
+      </if>
+      <if test="seating != null">
+       Seating = #{seating},
+      </if>
+      <if test="qrCode != null">
+        QR_code = #{qrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        State = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        Update_time = #{updateTime,jdbcType=DATE}
+      </if>
+    </set>
+    where dep_Name = #{depName} and DiningTable_Id = #{diningtableId,jdbcType=VARCHAR} and State &lt; 5
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.Table">
+    update table_management
+    set  State = #{state,jdbcType=INTEGER},
+    where DiningTable_Id = #{diningtableId,jdbcType=VARCHAR} and dep_Name = #{depName}
+  </update>
+    <!--//state（1，可用 2，有预约订单 3，正在使用  4，结束使用 5，禁用 6，删除)-->
+  <select id="selectPage" parameterType="Table" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from  table_management
+      where State &lt;  6
+     <if test="depName!=null">
+       and dep_Name = #{depName}
+     </if>
+      <if test="diningtableId != null">
+        and DiningTable_Id = #{diningtableId}
+      </if>
+      <if test="diningtableName != null">
+        and  DiningTable_Name = #{diningtableName }
+      </if>
+      <if test="seating != null">
+       and Seating = #{seating}
+      </if>
+      <if test="state != null">
+        and State = #{state}
+      </if>
+  </select>
+    <!--      <if test="updateTime != null">
+            and Update_time = #{updateTime,jdbcType=DATE},
+          </if>
+          <if test="creatTime != null">
+            and Creat_time = #{creatTime,jdbcType=DATE},
+          </if>
+          <if test="userId != null">
+            and user_Id = #{userId,jdbcType=VARCHAR},
+          </if>
+          -->
+  <select id="selectListAll"  resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from table_management
+    where State !=  6
+  </select>
+    <!--（1，可用 2，有预约订单 3，正在使用  4，结束使用 5，禁用 6，删除)-->
+
+</mapper>

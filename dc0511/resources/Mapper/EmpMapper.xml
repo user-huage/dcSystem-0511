@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.EmpMapper">
+    <resultMap id="EmpResultMap" type="emp">
+        <id column="emp_id" property="empId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_code" property="userCode"/>
+        <result column="sex" property="sex"/>
+        <result column="post_id" property="postId"/>
+        <result column="id_number" property="idNumber"/>
+        <result column="phone" property="phone"/>
+        <result column="dept_type" property="deptType"/>
+        <result column="total_name" property="totalName"/>
+        <result column="sub_name" property="subName"/>
+        <result column="post_name" property="postName"/>
+        <result column="emp_status" property="empStatus"/>
+        <result column="locks" property="locks"/>
+        <result column="dep_id" property="depId"/>
+        <result column="work_status" property="workStatus"/>
+    </resultMap>
+    <!--登录-->
+    <select id="login" parameterType="emp" resultMap="EmpResultMap">
+        SELECT * FROM emp where user_name=#{userName} and user_code=#{userCode};
+    </select>
+    <!--从角色员工表内查找员工的角色ID-->
+    <select id="queryEmpRole" parameterType="emp" resultMap="com.hx.dc.mapper.RoleMapper.RoleResultMap">
+        SELECT  role_id  from emp_role where emp_id=#{empId};
+    </select>
+    <!--通过角色ID查找员工的目录-->
+    <select id="queryEmpMenu" resultMap="com.hx.dc.mapper.MenuMapper.MenuResultMap" parameterType="role">
+        select m.menu_id,m.menu_name,m.url,m.parent_id from role_menu rm INNER JOIN menu m on rm.menu_id=m.menu_id WHERE rm.role_id=#{roleId} and m.menu_type='1';
+    </select>
+    <!--获取所有员工-->
+    <select id="queryAllEmp" resultMap="EmpResultMap" parameterType="emp">
+        SELECT * FROM emp
+        <where>
+            <if test="totalName!=null&amp;&amp;totalName!=''">and total_name=#{totalName}</if>
+            <if test="subName!=null&amp;&amp;subName!=''">and sub_name=#{subName}</if>
+            <if test="empStatus!=null&amp;&amp;empStatus!=''">and emp_status=#{empStatus}</if>
+            <if test="userName!=null&amp;&amp;userName!=''">and user_name=#{userName}</if>
+            <if test="userCode!=null&amp;&amp;userCode!=''">and userCode=#{userCode}</if>
+            <if test="idNumber!=null&amp;&amp;idNumber!=''">and id_number=#{idNumber}</if>
+            <if test="phone!=null&amp;&amp;phone!=''">and phone=#{phone}</if>
+        </where>
+    </select>
+    <!--异步加载部门-->
+    <select id="ajaxQueryPost" resultMap="com.hx.dc.mapper.PostMapper.PostResultMap" parameterType="emp">
+        SELECT post_id,post_name from post
+        <where>
+          <choose>
+            <when test="subName == null">total_name=#{totalName} and sub_name is null and status='1'</when>
+            <when test="subName!=null">total_name=#{totalName} and sub_name=#{subName} and status='1'</when>
+            <otherwise>1=0</otherwise>
+          </choose>
+        </where>;
+    </select>
+    <!--通过名称查找员工-->
+    <select id="queryEmpByName" parameterType="emp" resultMap="EmpResultMap">
+        SELECT * from emp where user_name=#{userName};
+    </select>
+    <!--添加员工-->
+    <insert id="insertEmp" parameterType="emp">
+        INSERT into emp(user_name, user_code, sex, post_id, id_number, phone, dept_type,total_name<if test="subName!=null">, sub_name</if>, post_name, emp_status, locks, dep_id, work_status)
+        VALUES
+        (#{userName},#{userCode},#{sex},#{postId},#{idNumber},#{phone},#{deptType},#{totalName}<if test="subName!=null">,#{subName}</if>,#{postName},#{empStatus},#{locks},#{depId},#{workStatus});
+    </insert>
+    <!--通过名称查找部门-->
+    <select id="queryDeptByName" parameterType="emp" resultMap="com.hx.dc.mapper.DeptMapper.DeptResultMap">
+        SELECT dep_id FROM dept
+        <where>
+            <choose>
+                <when test="subName!=null&amp;&amp;subName!=''">dep_name=#{subName}</when>
+                <when test="totalName!=null&amp;&amp;totalName!=''">dep_name=#{totalName}</when>
+            </choose>
+        </where>;
+    </select>
+    <!--修改员工-->
+    <update id="updateEmp" parameterType="emp">
+        UPDATE emp set user_name=#{userName}, user_code=#{userCode}, sex=#{sex}, post_id=#{postId}, id_number=#{idNumber},
+        phone=#{phone}, dept_type=#{deptType}, total_name=#{totalName}, sub_name=#{subName}, post_name=#{postName},
+        emp_status=#{empStatus}, locks=#{locks}, dep_id=#{depId}, work_status=#{workStatus}
+        WHERE emp_id=#{empId};
+    </update>
+    <!--删除员工-->
+    <!--<delete id="deleteEmp">-->
+        <!--DELETE from emp where emp_id in-->
+        <!--<foreach collection="array" item="empId" open="(" close=")" separator=",">-->
+            <!--#{empId}-->
+        <!--</foreach>-->
+    <!--</delete>-->
+    <update id="deleteEmp">
+        update emp set work_status='0' where emp_id in
+        <foreach collection="array" item="empId" open="(" close=")" separator=",">
+            #{empId}
+        </foreach>
+    </update>
+</mapper>

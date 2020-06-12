@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.LogMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.Log">
+    <id column="log_id" jdbcType="BIGINT" property="logId" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="task_text" jdbcType="VARCHAR" property="taskText" />
+    <result column="date_time" jdbcType="DATE" property="dateTime" />
+    <result column="task_time" jdbcType="TIMESTAMP" property="taskTime" />
+    <result column="oper_status" jdbcType="VARCHAR" property="operStatus" />
+    <result column="log_msg" jdbcType="VARCHAR" property="logMsg" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+    <result column="function" jdbcType="VARCHAR" property="functions" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    log_id, task_id, task_name, task_text, date_time, task_time, oper_status, log_msg, 
+    update_time, user, function
+  </sql>
+  <select id="selectLogBydate" resultType="java.lang.String">
+      select log_msg from log where date_time=#{arg0} and task_id like #{arg1}
+  </select>
+  <select id="selectLog" parameterType="com.hx.dc.entity.Log"  resultType="java.lang.String">
+    select log_msg from log where task_id=#{taskId}
+  </select>
+  <update id="updateLog" parameterType="com.hx.dc.entity.Log">
+    update log set log_msg=#{logMsg},update_time=#{updateTime},user=#{user} where task_id=#{taskId}
+  </update>
+  <select id="queryPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from  log WHERE date_time=#{date}
+  </select>
+  <select id="selectPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from  log
+    <where>
+      <if test="dateTime!=null &amp;&amp; dateTime!='' ">and date_time = #{dateTime}</if>
+    </where>
+  </select>
+  <insert id="insertLog" parameterType="com.hx.dc.entity.Log">
+    insert into `log`(task_id,task_name,task_text,date_time,task_time,oper_status,update_time) values
+    (#{taskId},#{taskName},#{taskText},#{dateTime},#{taskTime},#{operStatus},#{updateTime})
+  </insert>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from log
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from log
+    where log_id = #{logId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hx.dc.entity.Log">
+    insert into log (log_id, task_id, task_name, 
+      task_text, date_time, task_time, 
+      oper_status, log_msg, update_time, 
+      user, function)
+    values (#{logId,jdbcType=BIGINT}, #{taskId,jdbcType=VARCHAR}, #{taskName,jdbcType=VARCHAR}, 
+      #{taskText,jdbcType=VARCHAR}, #{dateTime,jdbcType=DATE}, #{taskTime,jdbcType=TIMESTAMP}, 
+      #{operStatus,jdbcType=VARCHAR}, #{logMsg,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{user,jdbcType=VARCHAR}, #{function,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.Log">
+    insert into log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        log_id,
+      </if>
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="taskName != null">
+        task_name,
+      </if>
+      <if test="taskText != null">
+        task_text,
+      </if>
+      <if test="dateTime != null">
+        date_time,
+      </if>
+      <if test="taskTime != null">
+        task_time,
+      </if>
+      <if test="operStatus != null">
+        oper_status,
+      </if>
+      <if test="logMsg != null">
+        log_msg,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="user != null">
+        user,
+      </if>
+      <if test="function != null">
+        function,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        #{logId,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null">
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null">
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskText != null">
+        #{taskText,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null">
+        #{dateTime,jdbcType=DATE},
+      </if>
+      <if test="taskTime != null">
+        #{taskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operStatus != null">
+        #{operStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="logMsg != null">
+        #{logMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="user != null">
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="function != null">
+        #{function,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.Log">
+    update log
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskName != null">
+        task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="taskText != null">
+        task_text = #{taskText,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null">
+        date_time = #{dateTime,jdbcType=DATE},
+      </if>
+      <if test="taskTime != null">
+        task_time = #{taskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operStatus != null">
+        oper_status = #{operStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="logMsg != null">
+        log_msg = #{logMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="user != null">
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="function != null">
+        function = #{function,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.Log">
+    update log
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      task_text = #{taskText,jdbcType=VARCHAR},
+      date_time = #{dateTime,jdbcType=DATE},
+      task_time = #{taskTime,jdbcType=TIMESTAMP},
+      oper_status = #{operStatus,jdbcType=VARCHAR},
+      log_msg = #{logMsg,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user = #{user,jdbcType=VARCHAR},
+      function = #{function,jdbcType=VARCHAR}
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+</mapper>

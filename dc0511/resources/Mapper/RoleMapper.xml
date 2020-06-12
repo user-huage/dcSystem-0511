@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.RoleMapper">
+    <resultMap id="RoleResultMap" type="role">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+    <!--查找所有角色-->
+    <select id="queryAllRole" resultMap="RoleResultMap">
+        SELECT * FROM role
+    </select>
+    <!--在员工角色表内查找角色-->
+    <select id="queryRoleToRoleEmp" resultMap="RoleResultMap">
+        SELECT role_id FROM emp_role where role_id in
+        <foreach collection="array" item="roleId" close=")" open="(" separator=",">
+            #{roleId}
+        </foreach>
+    </select>
+    <!--在员工角色表内删除角色-->
+    <delete id="deleteRoleToRoleEmp">
+        DELETE FROM emp_role where role_id in
+        <foreach collection="array" item="roleId" close=")" open="(" separator=",">
+            #{roleId}
+        </foreach>
+    </delete>
+    <!--在员工角色表内删除角色-->
+    <delete id="deleteRoleToRoleMenu">
+        DELETE FROM role_menu where role_id in
+        <foreach collection="array" item="roleId" close=")" open="(" separator=",">
+            #{roleId}
+        </foreach>
+    </delete>
+    <!--删除角色-->
+    <!--<delete id="deleteRole">-->
+        <!--DELETE FROM role WHERE role_id in-->
+        <!--<foreach collection="array" item="roleId" open="(" close=")" separator=",">-->
+            <!--#{roleId}-->
+        <!--</foreach>-->
+    <!--</delete>-->
+    <update id="deleteRole">
+        update role set status='0' WHERE role_id IN
+        <foreach collection="array" item="roleId" open="(" close=")" separator=",">
+              #{roleId}
+        </foreach>
+    </update>
+    <!--通过角色名称查找角色-->
+    <select id="queryRoleByName" parameterType="role" resultMap="RoleResultMap">
+        SELECT * FROM role WHERE role_name=#{roleName};
+    </select>
+    <!--添加角色-->
+    <insert id="insertRole" parameterType="role">
+        INSERT  into role(role_name, status, create_time) VALUES
+        (#{roleName},#{status},#{createTime});
+    </insert>
+    <!--修改角色-->
+    <update id="updateRole" parameterType="role">
+        update role set role_name=#{roleName},status=#{status},create_time=#{createTime}
+        where role_id=#{roleId};
+    </update>
+    <!--查找所有员工-->
+    <select id="queryAllEmp" resultMap="com.hx.dc.mapper.EmpMapper.EmpResultMap">
+        select * from emp WHERE work_status='1';
+    </select>
+    <!--查找角色对应的员工-->
+    <select id="queryEmpToRoleEmp" parameterType="role" resultMap="com.hx.dc.mapper.EmpMapper.EmpResultMap">
+        SELECT  e.user_name from emp_role er INNER JOIN emp e on er.emp_id=e.emp_id where er.role_id=#{roleId};
+    </select>
+    <!--在员工角色表内删除角色ID对应的员工ID-->
+    <delete id="deleteRoleEmp" parameterType="role">
+        delete FROM emp_role where role_id=#{roleId};
+    </delete>
+    <!--在员工角色表添加员工ID-->
+    <insert id="insertRoleEmp">
+        INSERT into emp_role(emp_id,role_id) VALUES (#{param1},#{param2});
+    </insert>
+    <!--查找所有目录-->
+    <select id="queryAllMenu" resultMap="com.hx.dc.mapper.MenuMapper.MenuResultMap">
+        SELECT * FROM menu WHERE status='1' and menu_type='1';
+    </select>
+    <!--在角色目录表内通过角色ID查找目录-->
+    <select id="queryMenuToRoleMenu" parameterType="role" resultMap="com.hx.dc.mapper.MenuMapper.MenuResultMap">
+         SELECT m.menu_id,m.menu_name  from role_menu rm INNER JOIN menu m on rm.menu_id=m.menu_id where rm.role_id=#{roleId};
+    </select>
+    <!--在角色目录表内删除角色ID对应的目录ID-->
+    <delete id="deleteRoleMenu" parameterType="role">
+        delete FROM role_menu where role_id=#{roleId};
+    </delete>
+    <!--在角色目录表内添加目录ID-->
+    <insert id="insertRoleMenu">
+        INSERT into role_menu(role_id,menu_id) VALUES (#{param1},#{param2});
+    </insert>
+</mapper>
