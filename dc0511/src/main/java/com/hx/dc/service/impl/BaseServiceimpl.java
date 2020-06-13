@@ -21,6 +21,12 @@ public class BaseServiceimpl<T> implements BaseService<T> {
     BaseMapper<T> baseMapper;//不能直接注入对应代理对象
 
     @Autowired
+    Menu2Mapper menu2Mapper;
+
+    @Autowired
+    MenuParameterMapper menuParameterMapper;
+
+    @Autowired
     protected Order_DetailsMapper order_DetailsMapper;
     @Autowired
     protected  OrderMapper orderMapper;

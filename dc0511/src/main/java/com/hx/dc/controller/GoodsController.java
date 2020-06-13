@@ -69,4 +69,38 @@ public class GoodsController {
        pageMap.put("rows",pageInfo.getList());//获取用户列表
         return pageMap;
     }
+
+    @RequestMapping("insert")
+    @ResponseBody
+    public int insert(Goods goods){
+        System.out.println(goods.getMenuName());
+        int i = goodsService.insertSelective(goods);
+        if(i!=0) {
+            return 1;
+        }
+        return 0;
+    }
+
+    @RequestMapping("delete")
+    @ResponseBody
+    public int delete(Goods goods){
+        goods.setGoodsDelete("1");
+        int i = goodsService.updateByPrimaryKeySelective(goods);
+        if(i!=0){
+            return 1;
+        }
+        return 0;
+    }
+
+    @RequestMapping("update")
+    @ResponseBody
+    public Object update(Goods goods){
+        System.out.println(goods);
+        int i  = goodsService.updateByPrimaryKeySelective(goods);
+        if(i!=0){
+            return 1;
+        }
+        return 0;
+    }
+
 }

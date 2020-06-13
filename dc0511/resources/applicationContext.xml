@@ -20,11 +20,11 @@
         <!-- 数据库驱动 -->
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <!-- 相应驱动的jdbcUrl -->
-        <property name="jdbcUrl" value="jdbc:mysql://192.168.0.119:3306/dcSystem?useUnicode=true&amp;characterEncoding=UTF-8" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test3?useUnicode=true&amp;characterEncoding=UTF-8" />
         <!-- 数据库的用户名 -->
-        <property name="username" value="root" />
+        <property name="username" value="hctest3" />
         <!-- 数据库的密码 -->
-        <property name="password" value="gyh" />
+        <property name="password" value="123456" />
         <!-- 每个分区最大的连接数 -->
         <property name="maxConnectionsPerPartition" value="3" />
         <!-- 每个分区最小的连接数 -->
@@ -125,5 +125,16 @@
                 <!--  <ref bean="cronTrigger2" /> -->
             </list>
         </property>
+    </bean>
+
+    <context:component-scan base-package="com.hx.dc"/>
+    <!--文件上传使用， 配置multipartResolver，id名称为约定好的 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 配置文件（每次上传的所有文件总大小)大小,单位为b, 1024000表示1000kb  -->
+        <property name="maxUploadSize" value="1024000" />
+    </bean>
+    <!--PropertiesFactoryBean对properties文件可用 ，可以用来注入properties配置文件的信息 -->
+    <bean id="uploadProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:upload.properties"></property>
     </bean>
 </beans>

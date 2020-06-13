@@ -91,7 +91,7 @@
       <if test="goodsStatus != null">
         goods_status,
       </if>
-      <if test="goodsDate != null">
+      <if test="goodsDate != null and goodsDate != ''">
         goods_date,
       </if>
       <if test="goodsDelete != null">
@@ -197,7 +197,7 @@
       <if test="goodsStatus != null">
         goods_status = #{goodsStatus,jdbcType=CHAR},
       </if>
-      <if test="goodsDate != null">
+      <if test="goodsDate != null and goodsDate !=''">
         goods_date = #{goodsDate,jdbcType=TIMESTAMP},
       </if>
       <if test="goodsDelete != null">
@@ -236,8 +236,9 @@
   <select id="selectPage" parameterType="Goods" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from goods
-    <where>
-
+    <where> goods_delete = 2
+      <if test="goodsName!=null">and goods_name = #{goodsName}</if>
+      <if test="menuName!=null">and menu_name = #{menuName}</if>
     </where>
     <!-- 使用分页插件后，这句：limit start,pageSize不用再写了  -->
   </select>

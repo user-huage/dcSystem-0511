@@ -1,6 +1,7 @@
 package com.hx.dc.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.hx.dc.entity.PageResult;
 import com.hx.dc.util.Erweima;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,5 +69,9 @@ public class BaseController {
         return date1;
     }
 
+    //用来封装easyui页面需要的信息,通过自己定义的实体封装数据返回页面
+    protected <T> PageResult<T> getPageResult(PageInfo<T> pageInfo){
+        return  new PageResult<T>(pageInfo.getTotal(), pageInfo.getList());
+    }
 
 }

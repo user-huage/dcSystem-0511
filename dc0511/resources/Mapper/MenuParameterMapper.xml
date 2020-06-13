@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.MenuParameterMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.MenuParameter">
+    <id column="parameter_id" jdbcType="INTEGER" property="parameterId" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="menu_parameter" jdbcType="VARCHAR" property="menuParameter" />
+    <result column="menu_styleselect" jdbcType="VARCHAR" property="menuStyleselect" />
+    <result column="menupar_delete" jdbcType="CHAR" property="menuparDelete" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    parameter_id, menu_name, menu_parameter, menu_styleselect, menupar_delete
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from menu_parameter
+    where parameter_id = #{parameterId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from menu_parameter
+    where parameter_id = #{parameterId,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="deleteByMunuName" parameterType="java.lang.String">
+    delete from menu_parameter
+    where menu_name = #{menuName}
+  </delete>
+
+  <insert id="insert" parameterType="com.hx.dc.entity.MenuParameter">
+    insert into menu_parameter (parameter_id,menu_name,menu_parameter,menu_styleselect,menupar_delete)
+    values (#{parameterId,jdbcType=INTEGER},#{menuName,jdbcType=VARCHAR},#{menuParameter,jdbcType=VARCHAR},#{menuStyleselect,jdbcType=VARCHAR},#{menuparDelete,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.MenuParameter">
+    insert into menu_parameter
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parameterId != null">
+        parameter_id,
+      </if>
+      <if test="menuName != null">
+        menu_name,
+      </if>
+      <if test="menuParameter != null">
+        menu_parameter,
+      </if>
+      <if test="menuStyleselect != null">
+        menu_styleselect,
+      </if>
+      <if test="menuparDelete != null">
+        menupar_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parameterId != null">
+        #{parameterId,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParameter != null">
+        #{menuParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="menuStyleselect != null">
+        #{menuStyleselect,jdbcType=VARCHAR},
+      </if>
+      <if test="menuparDelete != null">
+        #{menuparDelete,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.MenuParameter">
+    update menu_parameter
+    <set>
+      <if test="menuName != null">
+        menu_name = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuParameter != null">
+        menu_parameter = #{menuParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="menuStyleselect != null">
+        menu_styleselect = #{menuStyleselect,jdbcType=VARCHAR},
+      </if>
+      <if test="menuparDelete != null">
+        menupar_delete = #{menuparDelete,jdbcType=CHAR},
+      </if>
+    </set>
+    where parameter_id = #{parameterId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.MenuParameter">
+    update menu_parameter
+    set menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_parameter = #{menuParameter,jdbcType=VARCHAR},
+      menu_styleselect = #{menuStyleselect,jdbcType=VARCHAR}
+    where parameter_id = #{parameterId,jdbcType=INTEGER}
+  </update>
+  <!-- 分页查询,sql不用分页的信息，留给插件处理 -->
+  <select id="selectPage" parameterType="MenuParameter" resultMap="BaseResultMap">
+    select  parameter_id, menu_parameter.menu_name menu_name, menu_parameter, menu_styleselect
+    from menu_parameter JOIN menu2 ON menu_parameter.menu_name=menu2.menu_name and menu_parameter.menupar_delete=menu2.menu_delete
+    <where> menupar_delete = 2
+      <if test="menuName!=null and menuName!=''">and menu_parameter.menu_name = #{menuName}</if>
+    </where>
+    <!-- 使用分页插件后，这句：limit start,pageSize不用再写了  -->
+  </select>
+
+  <select id="selectImt" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from menu_parameter
+    where menu_name = #{menuName,jdbcType=VARCHAR}
+  </select>
+</mapper>
