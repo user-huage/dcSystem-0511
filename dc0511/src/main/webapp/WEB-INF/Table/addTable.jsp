@@ -24,9 +24,9 @@
     总部门： <input id="cc1" class="easyui-combobox" data-options="
         valueField: 'depName',
         textField: 'depName',
-        url: '/dep/depselectListparent.mvc',
+        url: '${proPath}/deptselcetPage.mvc',
         onSelect: function(depName){
-            var url = '/dep/depselectListson.mvc?depName='+depName.depName;
+            var url = '${proPath}/deptselcetPage.mvc?depName='+depName.depName;
             $('#cc2').combobox('reload', url);
         }" />
     分部门： <input id="cc2" class="easyui-combobox" data-options="valueField:'depName',textField:'depName'" />

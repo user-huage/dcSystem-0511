@@ -35,7 +35,7 @@
     </div>
     <div>
         <label for="qrCode">二维码更新:</label>
-        <input type="radio" name="qrCode" value="0">不更新<input type="radio" name="qrCode" value="1">更新
+        <input type="radio" name="qrCode" value="0" checked="checked">不更新<input type="radio" name="qrCode" value="1">更新
     </div>
     <div>
         <label for="seating">座位数:</label>

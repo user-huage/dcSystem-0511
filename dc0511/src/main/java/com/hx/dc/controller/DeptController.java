@@ -17,6 +17,8 @@ public class DeptController {
     @Resource
     private DeptService deptService;
 
+    private List<Dept> list = new ArrayList<Dept>();
+
     @ResponseBody
     @RequestMapping("queryAllDept")
     public Object queryAllDept() {
@@ -77,5 +79,47 @@ public class DeptController {
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("msg",msg);
         return map;
+    }
+
+    @RequestMapping("deptselcetPage")
+    @ResponseBody
+    public Object depselectList(String depName) {
+        Dept deptson = null;
+        List<Dept> listps = null;
+        if(depName == ""){
+            depName=null;
+        }
+        if(depName != null){
+            list = deptService.queryAllDept();
+            for(Dept dept1:list){
+                if(dept1.getDepName().equals(depName)){
+                    deptson.setParentId(dept1.getDepId());
+                }
+            }
+            if(deptson == null) {
+                new Exception("未查询到部门");
+            }
+            for(Dept dept2:list){
+                if(dept2.getParentId() == deptson.getParentId()){
+                    listps.add(dept2);
+                }
+                if(listps == null) {
+                    new Exception("未查询到部门");
+                }
+            }
+            return listps;
+        }else {
+            list = deptService.queryAllDept();
+            for(Dept dept3:list){
+                if(dept3.getParentId() == 0){
+                    listps.add(dept3);
+                }
+            }
+            if(listps == null) {
+                new Exception("未查询到部门");
+            }
+            System.out.print(list);
+            return listps;
+        }
     }
 }

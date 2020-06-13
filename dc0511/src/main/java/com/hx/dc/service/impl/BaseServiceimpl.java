@@ -42,6 +42,8 @@ public class BaseServiceimpl<T> implements BaseService<T> {
     OrderTableMapper orderTableMapper;
     @Resource
     GoodsOrderMapper goodsOrderMapper;
+    @Resource
+    SysParamMapper sysParamMapper;
     //后边要把所有的Mapper接口都要在这里配置出来
 
     //在构建父类完成后，baseMapper需要有对应的相关子Mapper的对象作为引用
