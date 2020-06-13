@@ -1,8 +1,9 @@
 package com.hx.dc.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Goods {
+public class Goods implements Serializable{
     private Integer goodsId;
 
     private String menuName;
@@ -171,5 +172,28 @@ public class Goods {
 
     public void setMenuStyleselect(String menuStyleselect) {
         this.menuStyleselect = menuStyleselect;
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "goodsId=" + goodsId +
+                ", menuName='" + menuName + '\'' +
+                ", totalName='" + totalName + '\'' +
+                ", subName='" + subName + '\'' +
+                ", goodsImage='" + goodsImage + '\'' +
+                ", goodsNumber='" + goodsNumber + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsPrice=" + goodsPrice +
+                ", goodsDescribe='" + goodsDescribe + '\'' +
+                ", goodsType='" + goodsType + '\'' +
+                ", goodsSell='" + goodsSell + '\'' +
+                ", goodsAfter='" + goodsAfter + '\'' +
+                ", goodsStatus='" + goodsStatus + '\'' +
+                ", goodsDate=" + goodsDate +
+                ", goodsDelete='" + goodsDelete + '\'' +
+                ", menuParameter='" + menuParameter + '\'' +
+                ", menuStyleselect='" + menuStyleselect + '\'' +
+                '}';
     }
 }

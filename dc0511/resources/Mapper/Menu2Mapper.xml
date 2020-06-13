@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.Menu2Mapper">
+    <resultMap id="BaseResultMap" type="com.hx.dc.entity.Menu2">
+        <id column="menu_id" jdbcType="INTEGER" property="menuId"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+        <result column="total_name" jdbcType="VARCHAR" property="totalName" />
+        <result column="sub_name" jdbcType="VARCHAR" property="subName" />
+        <result column="menu_delete" jdbcType="CHAR" property="menuDelete" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        menu_id, menu_name, total_name, sub_name, menu_delete
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from menu2
+        where menu_name = #{menuName,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from menu2
+        where menu_name = #{menuName,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.hx.dc.entity.Menu2">
+        insert into menu2 (menu_name,menu_delete)
+        values (#{menuName,jdbcType=VARCHAR},#{menuDelete,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.hx.dc.entity.Menu2">
+        insert into menu2
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="menuName != null">
+                menu_name,
+            </if>
+            <if test="totalName != null">
+                total_name,
+            </if>
+            <if test="subName != null">
+                sub_name,
+            </if>
+            <if test="menuDelete != null">
+                menu_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="menuName != null">
+                #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="totalName != null">
+                #{totalName,jdbcType=VARCHAR},
+            </if>
+            <if test="subName != null">
+                #{subName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuDelete != null">
+                #{menuDelete,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.Menu2">
+        update menu2
+        <set>
+            <if test="totalName != null">
+                total_name = #{totalName,jdbcType=VARCHAR},
+            </if>
+            <if test="subName != null">
+                sub_name = #{subName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuDelete != null">
+                menu_delete = #{menuDelete,jdbcType=CHAR},
+            </if>
+        </set>
+        where menu_name = #{menuName,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.Menu2">
+        update menu2
+        set menu_name = #{menuName,jdbcType=VARCHAR}
+        where menu_id = #{menuId,jdbcType=INTEGER}
+    </update>
+
+    <!-- 分页查询,sql不用分页的信息，留给插件处理 -->
+    <select id="selectPage" parameterType="Menu2" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List" />
+        from menu2
+        <where> menu_delete = 2
+            <if test="menuName!=null">and menu_name = #{menuName}</if>
+        </where>
+        <!-- 使用分页插件后，这句：limit start,pageSize不用再写了  -->
+    </select>
+
+    <select id="selectMenu" resultMap="BaseResultMap">
+        select menu_id,menu_name from menu2
+    </select>
+</mapper>

@@ -38,4 +38,21 @@ public class GoodsServiceimpl extends BaseServiceimpl<Goods> implements GoodsSer
         List<Goods> list1 = goodsMapper.selectPage2(list);
         return list1;
     }
+
+    @Override
+    public int updateByPrimaryKeySelective(Goods record) {
+        return baseMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public int insertSelective(Goods goods) {
+        goods.setGoodsDelete("2");
+        return baseMapper.insertSelective(goods);
+    }
+
+    @Override
+    public int updateByPrimaryKey(Goods goods) {
+        goods.setGoodsDelete("2");
+        return baseMapper.updateByPrimaryKey(goods);
+    }
 }
