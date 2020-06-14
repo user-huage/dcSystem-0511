@@ -26,7 +26,7 @@
     goods_delete, menu_parameter, menu_styleselect
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from goods
     where goods_id = #{goodsId,jdbcType=INTEGER}
@@ -170,7 +170,7 @@
       <if test="subName != null">
         sub_name = #{subName,jdbcType=VARCHAR},
       </if>
-      <if test="goodsImage != null">
+      <if test="goodsImage != null and goodsImage !=''">
         goods_image = #{goodsImage,jdbcType=VARCHAR},
       </if>
       <if test="goodsNumber != null">
@@ -203,7 +203,7 @@
       <if test="goodsDelete != null">
         goods_delete = #{goodsDelete,jdbcType=CHAR},
       </if>
-      <if test="menuParameter != null">
+      <if test="menuParameter != null and menuParameter !=''">
         menu_parameter = #{menuParameter,jdbcType=VARCHAR},
       </if>
       <if test="menuStyleselect != null">
@@ -215,21 +215,21 @@
   <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.Goods">
     update goods
     set menu_name = #{menuName,jdbcType=VARCHAR},
-      total_name = #{totalName,jdbcType=VARCHAR},
-      sub_name = #{subName,jdbcType=VARCHAR},
-      goods_image = #{goodsImage,jdbcType=VARCHAR},
-      goods_number = #{goodsNumber,jdbcType=VARCHAR},
-      goods_name = #{goodsName,jdbcType=VARCHAR},
-      goods_price = #{goodsPrice,jdbcType=INTEGER},
-      goods_describe = #{goodsDescribe,jdbcType=VARCHAR},
-      goods_type = #{goodsType,jdbcType=VARCHAR},
-      goods_sell = #{goodsSell,jdbcType=VARCHAR},
-      goods_after = #{goodsAfter,jdbcType=VARCHAR},
-      goods_status = #{goodsStatus,jdbcType=CHAR},
-      goods_date = #{goodsDate,jdbcType=TIMESTAMP},
-      goods_delete = #{goodsDelete,jdbcType=CHAR},
-      menu_parameter = #{menuParameter,jdbcType=VARCHAR},
-      menu_styleselect = #{menuStyleselect,jdbcType=VARCHAR}
+    total_name = #{totalName,jdbcType=VARCHAR},
+    sub_name = #{subName,jdbcType=VARCHAR},
+    goods_image = #{goodsImage,jdbcType=VARCHAR},
+    goods_number = #{goodsNumber,jdbcType=VARCHAR},
+    goods_name = #{goodsName,jdbcType=VARCHAR},
+    goods_price = #{goodsPrice,jdbcType=INTEGER},
+    goods_describe = #{goodsDescribe,jdbcType=VARCHAR},
+    goods_type = #{goodsType,jdbcType=VARCHAR},
+    goods_sell = #{goodsSell,jdbcType=VARCHAR},
+    goods_after = #{goodsAfter,jdbcType=VARCHAR},
+    goods_status = #{goodsStatus,jdbcType=CHAR},
+    goods_date = #{goodsDate,jdbcType=TIMESTAMP},
+    goods_delete = #{goodsDelete,jdbcType=CHAR},
+    menu_parameter = #{menuParameter,jdbcType=VARCHAR},
+    menu_styleselect = #{menuStyleselect,jdbcType=VARCHAR}
     where goods_id = #{goodsId,jdbcType=INTEGER}
   </update>
   <!-- 分页查询,sql不用分页的信息，留给插件处理 -->
@@ -237,8 +237,10 @@
     select <include refid="Base_Column_List" />
     from goods
     <where> goods_delete = 2
-      <if test="goodsName!=null">and goods_name = #{goodsName}</if>
-      <if test="menuName!=null">and menu_name = #{menuName}</if>
+      <if test="goodsName!=null &amp;&amp; goodsName!=''">and goods_name = #{goodsName}</if>
+      <if test="menuName!=null &amp;&amp; menuName!=''">and menu_name = #{menuName}</if>
+      <if test="goodsNumber!=null &amp;&amp; goodsNumber!=''">and goods_number = #{goodsNumber}</if>
+      <if test="goodsStatus!=null &amp;&amp; goodsStatus!=''">and goods_status = #{goodsStatus}</if>
     </where>
     <!-- 使用分页插件后，这句：limit start,pageSize不用再写了  -->
   </select>

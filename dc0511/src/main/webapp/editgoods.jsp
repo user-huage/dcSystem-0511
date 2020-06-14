@@ -48,7 +48,7 @@
                                     <img id="img" name="goodsImage">
                                 </p>
                                 <br>
-                                <form id="test22"  method="post" enctype="multipart/form-data">
+                                <form id="test21"  method="post" enctype="multipart/form-data">
                                     <input type="file" name="files" onchange="imgChange1(event)" id="file" style="display: none"/>
                                 </form>
                                 <button data-role="none" onclick="testUpload1();" class="btn btn-info">上传</button>
@@ -65,10 +65,10 @@
             </div>
             <div id="lll" title="规格参数" data-options="iconCls:'icon-reload'" style="padding:20px;">
                 <input id="menuParameter" name="menuParameter">
-               <%-- <input type="radio" class="zxc" name="colors"  value="1">大
-                <input type="radio" class="zxc" name="colors"  value="2">中
-                <input type="radio" class="zxc" name="colors"  value="3">小
-                        <a onclick="zxc()">sdsdsdsdsdd</a>--%>
+                <%-- <input type="radio" class="zxc" name="colors"  value="1">大
+                 <input type="radio" class="zxc" name="colors"  value="2">中
+                 <input type="radio" class="zxc" name="colors"  value="3">小
+                         <a onclick="zxc()">sdsdsdsdsdd</a>--%>
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
 <div id="div_5" style="width:50%;"></div>
 <script type="text/javascript">
     /*function zxc(){
-       alert( $('input[name="colors"]:checked').val())   }*/
+     alert( $('input[name="colors"]:checked').val())   }*/
     $('#rrr').combobox({
         url: '${baseURL}/menu2/selectMenu.mvc',
         valueField: 'menuId',
@@ -198,7 +198,7 @@
         menuParameter: array[0].menuParameter,
         goodsDescribe: array[0].goodsDescribe
     });
-    $("#img").attr("src","/img/"+array[0].goodsImage);
+    $("#image").attr("src","/img/"+array[0].goodsImage);
     function imgChange1(e) {
         console.info(e.target.files[0]);//图片文件
         console.log(e.target.value);//这个也是文件的路径和上面的dom.value是一样的
@@ -215,13 +215,13 @@
         $("#file").click();
     });
     function testUpload1() {
-        $('#test22').form('submit', {
+        $('#test21').form('submit', {
             url:"/fileUploadController/upload.mvc",
             onSubmit: function(){
                 return true;
             },
             success:function(data){
-                document.getElementById("img").value=data;
+                document.getElementById("image").value=data;
                 alert(data)
             }
         });
