@@ -29,19 +29,24 @@ public class OrderTableController extends BaseController {
     OrderTableService orderTableService;
     @Resource
     TableService tableService;
-    @RequestMapping("/goGoods/{folder}/{file}")
-    //定义一个通用的页面跳转的方法
-    public String goURL(Table table, Model model , @PathVariable("folder")String folder, @PathVariable("file")String file){
-        System.out.println("url："+folder+"/"+file);
-        System.out.println(table);
-        model.addAttribute("table",table);
-        return "forward:/WEB-INF/"+folder+"/"+file+".jsp";
-    }
-
 
     @RequestMapping("OrderSelectList")
     @ResponseBody
     public Object selectList(OrderTable ordertable, Integer page, Integer rows){
+
+        if(ordertable.getDepName() == ""){
+            ordertable.setDepName(null);
+        }
+        if(ordertable.getDiningtableId() == ""){
+            ordertable.setDiningtableId(null);
+        }
+        if(ordertable.getDiningtableName()== ""){
+            ordertable.setDiningtableName(null);
+        }
+        if(ordertable.getRepastForm() == ""){
+            ordertable.setRepastForm(null);
+        }
+
         PageInfo<OrderTable> pageInfo = orderTableService.selectPage(ordertable,page,rows);
         return getPageMap(pageInfo);
     }
@@ -58,8 +63,9 @@ public class OrderTableController extends BaseController {
        int i = orderTableService.insertSelective(ordertable);
        if(1 == i){
            tableAll.setState(2);
+           tableAll.setDepName(ordertable.getDepName());
+           tableAll.setDiningtableId(ordertable.getDiningtableId());
           tableService.updateByPrimaryKeySelective(tableAll);//state（1，可用 2，有预约订单 3，正在使用  4，结束使用 5，禁用 6，删除)
-
        }
         System.out.print("数据库修改数据条数:"+i);
         return i;

@@ -25,7 +25,10 @@
     </div>
     <div>
         <label for="repastForm">就餐形式:</label>
-        <input  type="text" name="repastForm"/>
+        <select id="cx18" class="easyui-combobox" name="repastForm"  style="width:200px;">
+                <option value="整桌">整桌</option>
+                 <option value="拼桌">拼桌</option>
+        </select>
     </div>
     <div>
         <label for="reservedNumber">手机号:</label>

@@ -37,8 +37,6 @@ public class BaseServiceimpl<T> implements BaseService<T> {
     @Autowired
     protected  GoodsMapper goodsMapper;
     @Autowired
-    ParamMapper paramMapper;
-    @Autowired
     AccountsDayMapper accountsDayMapper;
     @Autowired
     LogMapper logMapper;

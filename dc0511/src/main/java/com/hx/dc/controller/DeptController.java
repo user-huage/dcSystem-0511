@@ -1,14 +1,17 @@
 package com.hx.dc.controller;
 
 import com.hx.dc.entity.Dept;
+import com.hx.dc.entity.Emp;
 import com.hx.dc.entity.Tree;
 import com.hx.dc.service.DeptService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.annotation.SessionScope;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Controller
@@ -83,9 +86,11 @@ public class DeptController {
 
     @RequestMapping("deptselcetPage")
     @ResponseBody
-    public Object depselectList(String depName) {
-        Dept deptson = null;
-        List<Dept> listps = null;
+    public Object depselectList(String depName, HttpSession session) {
+        Dept deptson = new Dept();
+        List<Dept> listps = new ArrayList<Dept>();
+//        Emp emp = session.getAttribute("user");
+        System.out.println();
         if(depName == ""){
             depName=null;
         }

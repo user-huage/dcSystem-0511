@@ -93,7 +93,9 @@ public class TableController extends BaseController {
         if(table.getQrCode().equals("1")){
             String erweima = creatErweima(path4,37,37,table.getDiningtableName(),table.getDepName());
             table.setQrCode(erweima);
-        }
+        }else{
+        table.setQrCode(null);
+    }
         int count = tableService.updateByPrimaryKeySelective(table);
         System.out.print("数据库修改数据条数:"+count);
         return count;
@@ -101,22 +103,14 @@ public class TableController extends BaseController {
 
     @RequestMapping("deleteTable")
     @ResponseBody
-    public String deletetable(@RequestParam("diningtableId") String diningtableId, @RequestParam("depName") String depName){
+    public Object deletetable(Table table){
         String msg = null;
-        Table table = new Table();
-        table.setDiningtableId(diningtableId);
-        table.setDepName(depName);
-        System.out.println("餐桌编号:"+table.getDiningtableId());
-        table.setState(4);
+        System.out.println("餐桌:"+table);
         int i = tableService.updateByPrimaryKeySelective(table);
         //int i = tableService.deleteByPrimaryKey(table.getId());
         System.out.print("数据库修改数据条数:" + i);
-        if (1 == i) {
-        msg = "删除成功";
-        }else{
-            msg = "删除失败";
-        }
-        return msg;
+
+        return i;
     }
 
 }

@@ -44,11 +44,11 @@
     <div>
         <label for="state">状态:</label>
         <input  type="text" name="state" />
-       <%-- <select id="cc" class="easyui-combobox" name="supType" style="width:200px;">
-            <c:forEach items="${applicationScope.sysParam.supType}" var="supType">
-                <option value="${supType.key}">${supType.value}</option>
+        <select id="cx18" class="easyui-combobox" name="state"  style="width:200px;">
+            <c:forEach items="${applicationScope.sysParam.tableState}" var="tableState">
+                <option value="${tableState.key}">${tableState.value}</option>
             </c:forEach>
-        </select>--%>
+        </select>
     </div>
     <input id="btn12" type="button" value="提交"/>
 </form>

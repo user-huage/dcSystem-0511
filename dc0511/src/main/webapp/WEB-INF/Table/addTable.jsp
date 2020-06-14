@@ -21,50 +21,51 @@
  -->
 
 <div>
-    总部门： <input id="cc1" class="easyui-combobox" data-options="
+    <p>总部门： <input id="cc1" class="easyui-combobox" data-options="
         valueField: 'depName',
         textField: 'depName',
         url: '${proPath}/deptselcetPage.mvc',
         onSelect: function(depName){
             var url = '${proPath}/deptselcetPage.mvc?depName='+depName.depName;
             $('#cc2').combobox('reload', url);
-        }" />
-    分部门： <input id="cc2" class="easyui-combobox" data-options="valueField:'depName',textField:'depName'" />
+        }" /></p>
+    <p> 分部门： <input id="cc2" class="easyui-combobox" data-options="valueField:'depName',textField:'depName'" /></p>
 
 </div>
 
-      <form id="ff11" method="post">
-      <div>
+<form id="ff11" method="post">
+    <p>
         <label for="diningtableId">餐桌编号:</label>
         <input class="easyui-validatebox" type="text" name="diningtableId" data-options="validType:['length[4,20]']" />
-    </div>
-    <div>
+    </p>
+    <p>
         <label for="diningtableName">餐桌名称:</label>
         <input class="easyui-validatebox" type="text" name="diningtableName" data-options="validType:['length[4,100]']" />
-    </div>
-     <div>
-         <label for="seating">座位数:</label>
-          <input class="easyui-validatebox" type="text" name="seating" data-options="validType:['length[1,2]']" />
-     </div>
-    <div>
+    </p>
+    <p>
+        <label for="seating">座位数:</label>
+        <input class="easyui-validatebox" type="text" name="seating" data-options="validType:['length[1,2]']" />
+    </p>
+    <p>
         <label for="state">状态:</label>
-        <input class="easyui-validatebox" type="text" name="state" data-options="validType:['length[1,2]']" />
-    </div>
+        <select id="cx18" class="easyui-combobox" name="state"  style="width:200px;">
+            <c:forEach items="${applicationScope.sysParam.tableState}" var="tableState">
+                <option value="${tableState.key}">${tableState.value}</option>
+            </c:forEach>
+        </select>
+    </p>
     <a id="btn12" href="#" onclick="save()"  class="easyui-linkbutton" data-options="iconCls:'icon-save'">添加餐桌</a>
 
 </form>
 <script type="text/javascript">
     function save() {
-        //var win1 = parent.$("iframe[title='餐桌信息管理']").get(0).contentWindow;
         alert("save");
         $('#ff11').form('submit', {
             url:'${baseURL}/table/addTable.mvc',
             onSubmit: function (dep) {//
-//                dep[2]=$("#cc1").combobox("getValue");
                 dep.depName=$("#cc2").combobox("getValue");
                 var bool = $('#ff11').form('validate');
                 alert(bool);
-//                console.info(bool);
                 return bool;	// 返回false终止表单提交
             },
             success: function (data) {
@@ -73,11 +74,10 @@
                 }else{
                     alert("添加失败");
                 }
-                    parent.$('#tablewin').window("close");
-
-                    //调用前面的的dg 重新加载
-                    parent.$('#table').datagrid('load');
-                }
+                parent.$('#Tablewin').window("close");
+                //调用前面的的dg 重新加载
+                parent.$('#table').datagrid('load');
+            }
 
         });
     }

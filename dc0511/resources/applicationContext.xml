@@ -13,6 +13,8 @@
       http://www.springframework.org/schema/tx
       http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <!--个人数据库的名称在这里注释好，用的复制就行了，用户最好统一成 用户名root，密码gyh，-->
+    <!--<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/dc0511?useUnicode=true&amp;characterEncoding=UTF-8" />-->
 
     <!-- 配置数据源，记得去掉myBatis-config.xml的数据源相关配置 -->
     <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
@@ -20,11 +22,11 @@
         <!-- 数据库驱动 -->
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
         <!-- 相应驱动的jdbcUrl -->
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test3?useUnicode=true&amp;characterEncoding=UTF-8" />
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/dc0511?useUnicode=true&amp;characterEncoding=UTF-8" />
         <!-- 数据库的用户名 -->
-        <property name="username" value="hctest3" />
+        <property name="username" value="root" />
         <!-- 数据库的密码 -->
-        <property name="password" value="123456" />
+        <property name="password" value="gyh" />
         <!-- 每个分区最大的连接数 -->
         <property name="maxConnectionsPerPartition" value="3" />
         <!-- 每个分区最小的连接数 -->

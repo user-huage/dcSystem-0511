@@ -21,13 +21,19 @@
  -->
 
 <form id="sysParam1" method="post">
-   <%-- <div>
-        <label for="sysParamId">识别编号:</label>
-        <input class="easyui-validatebox" type="text" name="sysParamId" data-options="validType:['length[4,20]']" />
-    </div>--%>
+    <%-- <div>
+         <label for="sysParamId">识别编号:</label>
+         <input class="easyui-validatebox" type="text" name="sysParamId" data-options="validType:['length[4,20]']" />
+     </div>--%>
     <div>
         <label for="sysParamField">表字段/属性名:</label>
-        <input class="easyui-validatebox" type="text" name="sysParamField" data-options="validType:['length[4,100]']" />
+        <%--<input class="easyui-validatebox" type="text" name="sysParamField" data-options="validType:['length[4,100]']" />--%>
+        <select id="cc135" class="easyui-combobox" name="sysParamField"  style="width:200px;">
+            <option value="">请选择</option>
+            <c:forEach items="${applicationScope.sysParam}" var="sysParam">
+                <option value="${sysParam.key}">${sysParam.key}</option>
+            </c:forEach>
+        </select>
     </div>
     <div>
         <label for="sysParamValue">表字段值:</label>
@@ -37,10 +43,10 @@
         <label for="sysParamText">页面显示名称:</label>
         <input class="easyui-validatebox" type="text" name="sysParamText" data-options="validType:['length[1,50]']" />
     </div>
-        <div>
-            <label for="sysParamType">类型:</label>
-            <input class="easyui-validatebox" type="text" name="sysParamType" data-options="validType:['length[1,10]']" />
-        </div>
+    <div>
+        <label for="sysParamType">类型:</label>
+        <input class="easyui-validatebox" type="text" name="sysParamType" data-options="validType:['length[1,10]']" />
+    </div>
     </div>
     <a id="btnsys2" href="#" onclick="save()"  class="easyui-linkbutton" data-options="iconCls:'icon-save'">添加系统参数</a>
 

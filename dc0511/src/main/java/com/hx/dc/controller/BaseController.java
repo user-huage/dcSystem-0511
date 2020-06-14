@@ -46,18 +46,18 @@ public class BaseController {
         String path2 = path0+basePath;
         String name = DiningtableName+"_"+DepName;
         String Type = "gif";
-        String photoName = name+"Erweima.";
         // path3 = path2+"\\"+name+Type;
-        path3 = basePath+"\\"+photoName+Type;
+        path3 = basePath+"\\"+name+"Erweima."+Type;
         System.out.print("sdf"+path2);
-        String url="http://localhost:8080/goURL/Table_Order/addOrder.mvc";
+        String url="http://localhost:8080/goods.jsp";
 
         try {
             erweima.create(url,path2,w,h,Type,name);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            new Exception("创建二维码错误");
         }
-        System.out.println("最终路径:"+path3);
+        //System.out.println("最终项目相对路径:"+path3);
         return path3;
     }
 

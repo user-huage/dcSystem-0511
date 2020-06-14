@@ -159,40 +159,40 @@
     select <include refid="Base_Column_List"/> from diningtable_order
     where state &lt; 4
       <if test="depName != null">
-       and dep_Name = #{depName,jdbcType=VARCHAR},
+       and dep_Name = #{depName,jdbcType=VARCHAR}
       </if>
       <if test="diningtableId != null">
-        and DiningTable_Id = #{diningtableId,jdbcType=VARCHAR},
+        and DiningTable_Id = #{diningtableId,jdbcType=VARCHAR}
       </if>
       <if test="diningtableName != null">
-        and  DiningTable_Name = #{diningtableName,jdbcType=VARCHAR},
+        and  DiningTable_Name = #{diningtableName,jdbcType=VARCHAR}
       </if>
       <if test="seating != null">
-        and Seating = #{seating,jdbcType=INTEGER},
+        and Seating = #{seating,jdbcType=INTEGER}
       </if>
       <if test="repastForm != null">
-        and Repast_form = #{repastForm,jdbcType=VARCHAR},
+        and Repast_form = #{repastForm,jdbcType=VARCHAR}
       </if>
       <if test="orderTime != null">
-        and Order_time = #{orderTime},
+        and Order_time = #{orderTime}
       </if>
       <if test="reservedNumber != null">
-        and Reserved_number = #{reservedNumber,jdbcType=VARCHAR},
+        and Reserved_number = #{reservedNumber,jdbcType=VARCHAR}
       </if>
       <if test="beginTime != null">
-        and Begin_time = #{beginTime},
+        and Begin_time = #{beginTime}
       </if>
       <if test="endTime != null">
-        and End_time = #{endTime},
+        and End_time = #{endTime}
       </if>
       <if test="wechat != null">
-        and Wechat = #{wechat,jdbcType=VARCHAR},
+        and Wechat = #{wechat,jdbcType=VARCHAR}
       </if>
       <if test="state != null">
-        and state = #{state,jdbcType=INTEGER},
+        and state = #{state,jdbcType=INTEGER}
       </if>
       <if test="remark != null">
-        and Remark = #{remark,jdbcType=VARCHAR},
+        and Remark = #{remark,jdbcType=VARCHAR}
       </if>
   </select>
 
