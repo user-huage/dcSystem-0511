@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hx.dc.mapper.SysParamMapper">
+  <resultMap id="BaseResultMap" type="com.hx.dc.entity.SysParam">
+    <id column="sys_param_id" jdbcType="BIGINT" property="sysParamId" />
+    <result column="sys_param_field" jdbcType="VARCHAR" property="sysParamField" />
+    <result column="sys_param_value" jdbcType="VARCHAR" property="sysParamValue" />
+    <result column="sys_param_text" jdbcType="VARCHAR" property="sysParamText" />
+    <result column="sys_param_type" jdbcType="VARCHAR" property="sysParamType" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    sys_param_id, sys_param_field, sys_param_value, sys_param_text, sys_param_type
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sysparam_param
+    where sys_param_id = #{sysParamId,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sysparam_param
+    where sys_param_id = #{sysParamId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.hx.dc.entity.SysParam">
+    insert into sysparam_param (sys_param_id, sys_param_field, sys_param_value,
+      sys_param_text, sys_param_type)
+    values (#{sysParamId,jdbcType=BIGINT}, #{sysParamField,jdbcType=VARCHAR}, #{sysParamValue,jdbcType=VARCHAR},
+      #{sysParamText,jdbcType=VARCHAR}, #{sysParamType,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.hx.dc.entity.SysParam">
+    insert into sysparam_param
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysParamId != null">
+        sys_param_id,
+      </if>
+      <if test="sysParamField != null">
+        sys_param_field,
+      </if>
+      <if test="sysParamValue != null">
+        sys_param_value,
+      </if>
+      <if test="sysParamText != null">
+        sys_param_text,
+      </if>
+      <if test="sysParamType != null">
+        sys_param_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysParamId != null">
+        #{sysParamId,jdbcType=BIGINT},
+      </if>
+      <if test="sysParamField != null">
+        #{sysParamField,jdbcType=VARCHAR},
+      </if>
+      <if test="sysParamValue != null">
+        #{sysParamValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sysParamText != null">
+        #{sysParamText,jdbcType=VARCHAR},
+      </if>
+      <if test="sysParamType != null">
+        #{sysParamType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hx.dc.entity.SysParam">
+    update sysparam_param
+    <set>
+      <if test="sysParamField != null">
+        sys_param_field = #{sysParamField,jdbcType=VARCHAR},
+      </if>
+      <if test="sysParamValue != null">
+        sys_param_value = #{sysParamValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sysParamText != null">
+        sys_param_text = #{sysParamText,jdbcType=VARCHAR},
+      </if>
+      <if test="sysParamType != null">
+        sys_param_type = #{sysParamType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sys_param_id = #{sysParamId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.hx.dc.entity.SysParam">
+    update sysparam_param
+    set sys_param_field = #{sysParamField,jdbcType=VARCHAR},
+      sys_param_value = #{sysParamValue,jdbcType=VARCHAR},
+      sys_param_text = #{sysParamText,jdbcType=VARCHAR},
+      sys_param_type = #{sysParamType,jdbcType=VARCHAR}
+    where sys_param_id = #{sysParamId,jdbcType=BIGINT}
+  </update>
+
+  <!-- 查询整个表的参数，使用baseMapper中通过方法 -->
+  <select id="selectPage" parameterType="SysParam" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from sysparam_param
+    <where>
+      <if test="sysParamId != null">
+       and sys_param_id = #{sysParamId}
+      </if>
+      <if test="sysParamField != null">
+        and sys_param_field = #{sysParamField,jdbcType=VARCHAR}
+      </if>
+      <if test="sysParamValue != null">
+        and sys_param_value = #{sysParamValue,jdbcType=VARCHAR}
+      </if>
+      <if test="sysParamText != null">
+        and sys_param_text = #{sysParamText,jdbcType=VARCHAR}
+      </if>
+      <if test="sysParamType != null">
+        and sys_param_type = #{sysParamType,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <!--sys_param_field,sys_param_value,sys_param_text,sys_param_type-->
+  <!-- 查询其它表的数据，装载在系统参数的实体里 -->
+  <select id="selectOtherTable" parameterType="string" resultMap="BaseResultMap">
+    <!-- select s.sh_id as sys_param_value,s.sh_name as sys_param_text from store_house s -->
+    <!-- #{}不能直接接收sql语句，类似PreparedStatement,不允许sql的注入；如果使用sql使用参数，可以用${value}接收执行，慎用 -->
+    ${value}
+  </select>
+
+  <select id="loadSysParam"  resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" /> from sysparam_param
+  </select>
+  <!--selectOtherTable-->
+
+  <select id="selectListAll" parameterType="SysParam" resultMap="BaseResultMap">
+    select sys_param_field from sysparam_param
+  </select>
+
+</mapper>
