@@ -2,18 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hx.dc.mapper.GoodsOrderMapper">
   <resultMap id="BaseResultMap" type="com.hx.dc.entity.GoodsOrder">
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="order_id" jdbcType="VARCHAR" property="orderId" />
-    <result column="DiningTable_Id" jdbcType="VARCHAR" property="diningtableId" />
+    <result column="DiningTable_Id" jdbcType="INTEGER" property="diningtableId" />
     <result column="DiningTable_Name" jdbcType="VARCHAR" property="diningtableName" />
     <result column="dep_Name" jdbcType="VARCHAR" property="depName" />
-    <result column="goods_number" jdbcType="VARCHAR" property="goodsNumber" />
+    <result column="goods_number" jdbcType="INTEGER" property="goodsNumber" />
     <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
     <result column="goods_image" jdbcType="VARCHAR" property="goodsImage" />
     <result column="place_number" jdbcType="VARCHAR" property="placeNumber" />
     <result column="return_number" jdbcType="VARCHAR" property="returnNumber" />
-    <result column="cook_number" jdbcType="VARCHAR" property="cookNumber" />
+    <result column="cook_number" jdbcType="INTEGER" property="cookNumber" />
     <result column="State" jdbcType="INTEGER" property="state" />
-    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="shopping_explai" jdbcType="VARCHAR" property="shoppingExplai" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -184,5 +185,17 @@
   <select id="selectListAll"  resultMap="BaseResultMap" >
   select <include refid="Base_Column_List" /> from order_table
   </select>
+  <insert id="insert2">
+    insert into order_table(order_id, DiningTable_Id, goods_number,
+    goods_name, goods_image, place_number,
+    cook_number,start_time,State)values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.orderId},#{item.diningtableId},
+      #{item.goodsNumber},#{item.goodsName},#{item.goodsImage},
+      #{item.placeNumber},#{item.cookNumber},#{item.startTime},#{item.state}
+      )
+    </foreach>
+  </insert>
+
 
 </mapper>

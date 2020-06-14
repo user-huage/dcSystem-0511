@@ -2,8 +2,10 @@ package com.hx.dc.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.hx.dc.entity.Goods;
+import com.hx.dc.entity.GoodsOrder;
 import com.hx.dc.entity.Order;
 import com.hx.dc.entity.Order_Details;
+import com.hx.dc.service.GoodsOrderService;
 import com.hx.dc.service.GoodsService;
 import com.hx.dc.service.OrderDetailsService;
 import com.hx.dc.service.OrderService;
@@ -26,6 +28,8 @@ import java.util.*;
 public class OrderController extends BaseAction {
     @Autowired
     HttpSession session;
+    @Resource
+    private GoodsOrderService goodsOrderService;
     @Resource
     private OrderService orderService;
     @Resource
@@ -112,7 +116,31 @@ public class OrderController extends BaseAction {
         }else {
             System.out.println("明细插入失败");
         }
+//生成后厨订单表
+        int q = 0;
+        List<GoodsOrder> goodsOrders = new ArrayList<>();
+        for (Goods a:returnlist
+                ) {
+            GoodsOrder goodsOrder = new GoodsOrder();
+            goodsOrder.setGoodsName(a.getGoodsName());
+            goodsOrder.setOrderId(d);
+            goodsOrder.setDiningtableId(s);
+            goodsOrder.setGoodsNumber(a.getGoodsId());
+            goodsOrder.setGoodsImage(a.getGoodsImage());
+            goodsOrder.setPlaceNumber(num[q]);
+            goodsOrder.setCookNumber(num[q]);
+            goodsOrder.setStartTime(dt);
+            goodsOrder.setState(1);
+            goodsOrders.add(goodsOrder);
 
+            q++;
+        }
+        int go =  goodsOrderService.insertId(goodsOrders);
+        if(go>0){
+            System.out.println("插入后厨成功");
+        }else{
+            System.out.println("插入失败");
+        }
         Map m=new HashMap();
         m.put("a","操作成功");
         return m;

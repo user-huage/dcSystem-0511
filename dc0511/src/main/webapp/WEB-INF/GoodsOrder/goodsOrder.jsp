@@ -8,22 +8,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>后厨订单管理</title>
 
-<%--
-        用error调试错误信息：
-        可以alert出来，查看具体是哪里出错了
-        具体参数：
-        XMLHttpRequest：XMLHttpRequest.readyState: 状态码的意思
-        0 － （未初始化）还没有调用send()方法
-        1 － （载入）已调用send()方法，正在发送请求
-        2 － （载入完成）send()方法执行完成，已经接收到全部响应内容
-        3 － （交互）正在解析响应内容
-        4 － （完成）响应内容解析完成，可以在客户端调用了
-        XMLHttpRequest：XMLHttpRequest.status:
-        textStatus：错误原因
-        null timeout error notmodified  parsererror
-        errorThrown:（可选）捕获的错误对象*/
+    <%--
+            用error调试错误信息：
+            可以alert出来，查看具体是哪里出错了
+            具体参数：
+            XMLHttpRequest：XMLHttpRequest.readyState: 状态码的意思
+            0 － （未初始化）还没有调用send()方法
+            1 － （载入）已调用send()方法，正在发送请求
+            2 － （载入完成）send()方法执行完成，已经接收到全部响应内容
+            3 － （交互）正在解析响应内容
+            4 － （完成）响应内容解析完成，可以在客户端调用了
+            XMLHttpRequest：XMLHttpRequest.status:
+            textStatus：错误原因
+            null timeout error notmodified  parsererror
+            errorThrown:（可选）捕获的错误对象*/
 
---%>
+    --%>
 </head>
 <body>
 <table id="goodsOrder"></table>
@@ -40,11 +40,32 @@
                 {field:'diningtableName',title:'餐桌名称',width:100},
                 {field:'goodsNumber',title:'商品编号',width:100},
                 {field:'goodsName',title:"商品名称",width:100},
-                {field:'goodsImage',title:'商品图片',width:100},
+                {field:'goodsImage',title:'商品图片',width:100,
+                    align: 'center',
+                    formatter: function (value, rec) {//使用formatter格式化刷子
+                        return '<img src=' + value + '>';
+                    }},
                 {field:'placeNumber',title:'下单数量',width:100},
                 {field:'returnNumber',title:'退菜数量',width:100},
                 {field:'cookNumber',title:'应做数量',width:100},
-                {field:'state',title:'订单状态',width:100},
+                {field:'state',title:'订单状态',width:100,
+                    formatter: function (value, row, index) {
+                        if (value=='1'){
+                            return value='待制作';
+                        }else if(value=='2'){
+                            return value='正在制作';
+                        }else if(value=='3'){
+                            return value='制作完成';
+                        }else if(value=='4'){
+                            return value='已经上菜';
+                        }else if(value=='5'){
+                            return value='订单退订';
+                        }else if(value=='6'){
+                            return value='删除';
+                        }else {
+                            return value='异常';
+                        }
+                    }},
                 {field:'startTime',title:'下单时间',width:100},
                 {field:'shoppingExplai',title:'备注',width:100}
             ]],
@@ -53,34 +74,34 @@
                 text:'正在制作',
                 iconCls:'icon-add',
                 handler: function(){
-                 var rows = $("#goodsOrder").datagrid("getSelections");
-        var bool = true;
+                    var rows = $("#goodsOrder").datagrid("getSelections");
+                    var bool = true;
                     var state2 = 2;
-        //alert(array);
-        //判断是否选中
-        if (rows.length == 1) {
-            //定义数组，通过下边的用来存储选中记录的Id
+                    //alert(array);
+                    //判断是否选中
+                    if (rows.length == 1) {
+                        //定义数组，通过下边的用来存储选中记录的Id
 //                        var states = new Array();
 //                        for (i = 0; i < array.length; i++) {
-            var state = rows[0].state;
-            alert(rows[0].state);
-            if(state != 1){
-                bool = false;
-                $.messager.alert('提示消息',"请选择状态为 1、待用餐的订单");
-            }
+                        var state = rows[0].state;
+                        alert(rows[0].state);
+                        if(state != 1){
+                            bool = false;
+                            $.messager.alert('提示消息',"请选择状态为 1、待用餐的订单");
+                        }
 
-            if(bool){
-                sava(state2,rows);
-            }
-        } else {
-            $.messager.show({
-                title : '操作提示',
-                msg : '请先选择一条要改变的订单。',
-                timeout : 4000,
-                showType : 'slide'
-            });
-        }
-    }
+                        if(bool){
+                            sava(state2,rows);
+                        }
+                    } else {
+                        $.messager.show({
+                            title : '操作提示',
+                            msg : '请先选择一条要改变的订单。',
+                            timeout : 4000,
+                            showType : 'slide'
+                        });
+                    }
+                }
 
             },'-', {
                 text: '已结束',
@@ -109,7 +130,7 @@
                         });
                     }
                 }
-                },'-', {
+            },'-', {
                 text: '取消订单',
                 iconCls: 'icon-edit',
                 handler: function () {
