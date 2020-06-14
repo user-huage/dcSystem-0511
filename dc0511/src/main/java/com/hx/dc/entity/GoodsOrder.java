@@ -1,34 +1,45 @@
 package com.hx.dc.entity;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class GoodsOrder implements Serializable {
+import java.util.Date;
+
+public class GoodsOrder {
+    private Integer id;
 
     private String orderId;
 
-    private String diningtableId;
+    private Integer diningtableId;
 
     private String diningtableName;
 
     private String depName;
 
-    private String goodsNumber;
+    private Integer goodsNumber;
 
     private String goodsName;
 
     private String goodsImage;
 
-    private String placeNumber;
+    private Integer placeNumber;
 
     private String returnNumber;
 
-    private String cookNumber;
+    private Integer cookNumber;
 
-    private Integer state;//(1,待制作 2，正在制作，3，制作完成，4，以上菜 5，订单退订 ,6，删除)
-
-    private String startTime;
+    private Integer state;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date startTime;
 
     private String shoppingExplai;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getOrderId() {
         return orderId;
@@ -38,11 +49,11 @@ public class GoodsOrder implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getDiningtableId() {
+    public Integer getDiningtableId() {
         return diningtableId;
     }
 
-    public void setDiningtableId(String diningtableId) {
+    public void setDiningtableId(Integer diningtableId) {
         this.diningtableId = diningtableId;
     }
 
@@ -62,11 +73,11 @@ public class GoodsOrder implements Serializable {
         this.depName = depName;
     }
 
-    public String getGoodsNumber() {
+    public Integer getGoodsNumber() {
         return goodsNumber;
     }
 
-    public void setGoodsNumber(String goodsNumber) {
+    public void setGoodsNumber(Integer goodsNumber) {
         this.goodsNumber = goodsNumber;
     }
 
@@ -86,11 +97,11 @@ public class GoodsOrder implements Serializable {
         this.goodsImage = goodsImage;
     }
 
-    public String getPlaceNumber() {
+    public Integer getPlaceNumber() {
         return placeNumber;
     }
 
-    public void setPlaceNumber(String placeNumber) {
+    public void setPlaceNumber(Integer placeNumber) {
         this.placeNumber = placeNumber;
     }
 
@@ -102,11 +113,11 @@ public class GoodsOrder implements Serializable {
         this.returnNumber = returnNumber;
     }
 
-    public String getCookNumber() {
+    public Integer getCookNumber() {
         return cookNumber;
     }
 
-    public void setCookNumber(String cookNumber) {
+    public void setCookNumber(Integer cookNumber) {
         this.cookNumber = cookNumber;
     }
 
@@ -118,11 +129,11 @@ public class GoodsOrder implements Serializable {
         this.state = state;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
