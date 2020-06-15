@@ -1,9 +1,10 @@
 package com.hx.dc.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuTree {
+public class MenuTree implements Serializable {
     private int menuId;
     private String menuName;
     private String url;

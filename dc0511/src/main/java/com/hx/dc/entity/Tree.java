@@ -1,9 +1,10 @@
 package com.hx.dc.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tree {
+public class Tree implements Serializable {
     private int id;
     private String text;
     private boolean checked;

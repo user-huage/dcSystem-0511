@@ -3,9 +3,10 @@ package com.hx.dc.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Role {
+public class Role implements Serializable {
     private int roleId;
     private String roleName;
     private String status;

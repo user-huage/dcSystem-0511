@@ -1,6 +1,8 @@
 package com.hx.dc.entity;
 
-public class Emp {
+import java.io.Serializable;
+
+public class Emp  implements Serializable {
     private int empId;
     private String userName;
     private String userCode;

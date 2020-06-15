@@ -1,7 +1,9 @@
 package com.hx.dc.entity;
 
 
-public class Dept {
+import java.io.Serializable;
+
+public class Dept implements Serializable {
     private int depId;
     private String depName;
     private String depAddress;
