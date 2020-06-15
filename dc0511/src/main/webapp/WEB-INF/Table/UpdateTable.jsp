@@ -44,20 +44,13 @@
     <div>
         <label for="state">状态:</label>
         <input  type="text" name="state" />
-       <%-- <select id="cc" class="easyui-combobox" name="supType" style="width:200px;">
-            <c:forEach items="${applicationScope.sysParam.supType}" var="supType">
-                <option value="${supType.key}">${supType.value}</option>
-            </c:forEach>
-        </select>--%>
+
     </div>
     <input id="btn12" type="button" value="提交"/>
 </form>
 <script type="text/javascript">
     $(function() {
-        alert(1);
         var talbearray =parent.$("#table").datagrid("getSelections");
-        alert(talbearray[0].depId);
-        alert(2);
         $("#ff3").form('load',{
             depName : talbearray[0].depName,
             diningtableId : talbearray[0].diningtableId,
@@ -73,10 +66,8 @@
         $("#ff3").form("disableValidation");
 
         $("#btn12").click(function() {
-            //alert("ddddddddddd");
             $("#ff3").form("enableValidation");
             if ($("#ff3").form("validate")) {
-                alert("------------");
                 $('#ff3').form('submit', {
                     url : '${proPath}/table/updateTable.mvc',
                     onSubmit : function() {

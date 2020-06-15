@@ -55,16 +55,11 @@
 </form>
 <script type="text/javascript">
     function save() {
-        //var win1 = parent.$("iframe[title='餐桌信息管理']").get(0).contentWindow;
-        alert("save");
         $('#ff11').form('submit', {
             url:'${baseURL}/table/addTable.mvc',
             onSubmit: function (dep) {//
-//                dep[2]=$("#cc1").combobox("getValue");
                 dep.depName=$("#cc2").combobox("getValue");
                 var bool = $('#ff11').form('validate');
-                alert(bool);
-//                console.info(bool);
                 return bool;	// 返回false终止表单提交
             },
             success: function (data) {

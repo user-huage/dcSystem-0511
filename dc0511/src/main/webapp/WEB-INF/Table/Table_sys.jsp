@@ -35,7 +35,6 @@
 
     <script type="text/javascript">
     function chat(){
-        alert("diaoyong");
         $('#table').datagrid('load', {
             depName:$("#cx14").combobox("getValue"),
             diningtableName:$("[name=diningtableName]").val(),

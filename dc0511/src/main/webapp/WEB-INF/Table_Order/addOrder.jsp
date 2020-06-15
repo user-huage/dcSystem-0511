@@ -62,10 +62,8 @@
 //        $("#ff3").form("disableValidation");
 
         $("#btn25").click(function() {
-            //alert("ddddddddddd");
             $("#ff4").form("enableValidation");
             if ($("#ff4").form("validate")) {
-                alert("------------");
                 $('#ff4').form('submit', {
                     url : '${proPath}/orderTable/addOrder.mvc',
                     onSubmit : function() {

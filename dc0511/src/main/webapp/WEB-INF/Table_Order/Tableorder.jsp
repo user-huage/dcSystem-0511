@@ -37,14 +37,10 @@
                 handler: function(){
                     var array = $("#tableOrder").datagrid("getSelections");
                     var bool = true;
-                    //alert(array);
-                    //判断是否选中
                     if (array.length == 1) {
                         //定义数组，通过下边的用来存储选中记录的Id
-//                        var states = new Array();
-//                        for (i = 0; i < array.length; i++) {
+//
                            var state = array[0].state;
-                           alert(array[0].state);
                             if(state != 1){
                                 bool = false;
                                     $.messager.alert('提示消息',"请选择状态为待用餐的订单");
@@ -90,14 +86,10 @@
                 handler: function () {
                     var array = $("#tableOrder").datagrid("getSelections");
                     var bool = true;
-                    //alert(array);
                     //判断是否选中
                     if (array.length == 1) {
-                        //定义数组，通过下边的用来存储选中记录的Id
-//                        var states = new Array();
-//                        for (i = 0; i < array.length; i++) {
+
                         var state = array[0].state;
-                        alert(array[0].state);
                         if(state != 2){
                             bool = false;
                             $.messager.alert('提示消息',"请选择状态为正在用餐的订单");

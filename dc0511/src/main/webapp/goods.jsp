@@ -72,7 +72,7 @@
              {field:'goodsPrice',title:'价格',width:100},
              {field:'goodsImage',title:'商品图片',width: 100, align: 'center',
                  formatter: function (value, rec) {//使用formatter格式化刷子
-                     return '<img src=' + value + '>';
+                     return "<img src='/img/"+value+"' style='height: 40px ;width: 40px;'>";
                      }},
              {field:'goodsDescribe',title:'商品描述',width:100},
 

@@ -25,7 +25,7 @@
                {field:'goodsPrice',title:'价格',width:100},
                {field:'goodsImage',title:'商品图片',width: 100, align: 'center',
                    formatter: function (value, rec) {//使用formatter格式化刷子
-                       return '<img src=${proPath}' + value + '>';
+                       return  "<img src='/img/"+value+"' style='height: 40px ;width: 40px;'>";
                    }},
                {field:'asd',title:'数量',width:100,
                    formatter: function (value, rec) {//使用formatter格式化刷子

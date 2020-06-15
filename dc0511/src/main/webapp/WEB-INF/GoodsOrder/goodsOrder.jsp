@@ -8,22 +8,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>后厨订单管理</title>
 
-    <%--
-            用error调试错误信息：
-            可以alert出来，查看具体是哪里出错了
-            具体参数：
-            XMLHttpRequest：XMLHttpRequest.readyState: 状态码的意思
-            0 － （未初始化）还没有调用send()方法
-            1 － （载入）已调用send()方法，正在发送请求
-            2 － （载入完成）send()方法执行完成，已经接收到全部响应内容
-            3 － （交互）正在解析响应内容
-            4 － （完成）响应内容解析完成，可以在客户端调用了
-            XMLHttpRequest：XMLHttpRequest.status:
-            textStatus：错误原因
-            null timeout error notmodified  parsererror
-            errorThrown:（可选）捕获的错误对象*/
-
-    --%>
 </head>
 <body>
 <table id="goodsOrder"></table>
@@ -43,7 +27,7 @@
                 {field:'goodsImage',title:'商品图片',width:100,
                     align: 'center',
                     formatter: function (value, rec) {//使用formatter格式化刷子
-                        return '<img src=' + value + '>';
+                        return  "<img src='/img/"+value+"' style='height: 40px ;width: 40px;'>";
                     }},
                 {field:'placeNumber',title:'下单数量',width:100},
                 {field:'returnNumber',title:'退菜数量',width:100},
@@ -84,7 +68,6 @@
 //                        var states = new Array();
 //                        for (i = 0; i < array.length; i++) {
                         var state = rows[0].state;
-                        alert(rows[0].state);
                         if(state != 1){
                             bool = false;
                             $.messager.alert('提示消息',"请选择状态为 1、待用餐的订单");
@@ -113,7 +96,6 @@
 
                     if (rows.length == 1) {
                         var state = rows[0].state;
-                        alert(rows[0].state);
                         if(state != 2){
                             bool = false;
                             $.messager.alert('提示消息',"请选择状态为 2、正在用餐的订单");
@@ -140,7 +122,6 @@
 
                     if (rows.length == 1) {
                         var state = rows[0].state;
-                        alert(rows[0].state);
                         if(bool){
                             sava(state3,rows);
                         }

@@ -40,7 +40,7 @@
       goods_name, goods_image, place_number, 
       return_number, cook_number, State, 
       start_time, shopping_explai)
-    values #{orderId,jdbcType=VARCHAR}, #{diningtableId,jdbcType=VARCHAR},
+    values #{orderId,jdbcType=VARCHAR}, #{diningtableId,jdbcType=INTEGER},
       #{diningtableName,jdbcType=VARCHAR}, #{depName,jdbcType=VARCHAR}, #{goodsNumber,jdbcType=VARCHAR},
       #{goodsName,jdbcType=VARCHAR}, #{goodsImage,jdbcType=VARCHAR}, #{placeNumber,jdbcType=VARCHAR}, 
       #{returnNumber,jdbcType=VARCHAR}, #{cookNumber,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
@@ -95,7 +95,7 @@
         #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="diningtableId != null">
-        #{diningtableId,jdbcType=VARCHAR},
+        #{diningtableId,jdbcType=INTEGER},
       </if>
       <if test="diningtableName != null">
         #{diningtableName,jdbcType=VARCHAR},
@@ -150,7 +150,7 @@
       </if>
     </set>
     where  dep_Name = #{depName,jdbcType=VARCHAR}
-    and diningtable_Id = #{diningtableId,jdbcType=VARCHAR}
+    and diningtable_Id = #{diningtableId,jdbcType=INTEGER}
     and order_id = #{orderId,jdbcType=INTEGER}
   </update>
 
@@ -168,7 +168,7 @@
        and  order_id = #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="diningtableId != null">
-        and diningtable_Id = #{diningtableId,jdbcType=VARCHAR},
+        and diningtable_Id = #{diningtableId,jdbcType=INTEGER},
       </if>
       <if test="diningtableName != null">
        and diningtable_Name = #{diningtableName,jdbcType=VARCHAR},
